@@ -1,0 +1,272 @@
+/* css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #0A2342; /* Deep Navy Blue */
+    --secondary-color: #006A4E; /* Brazilian Green */
+    --accent-color: #FFC107; /* Gold/Yellow */
+    --background-color: #FFFFFF;
+    --light-background-color: #F8F9FA;
+    --text-color: #212529;
+    --light-text-color: #FFFFFF;
+    --bs-primary-rgb: 10, 35, 66; /* For Bootstrap components if overriding default primary */
+    --bs-secondary-rgb: 0, 106, 78; /* For Bootstrap components */
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    color: var(--text-color);
+    line-height: 1.7;
+    background-color: var(--background-color);
+    padding-top: 80px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.navbar-brand {
+    display: flex; /* Habilita flexbox para alinhamento horizontal */
+    align-items: center; /* Centraliza verticalmente o logo e o texto */
+    padding-top: 0.3rem; /* Ajuste o padding se necessário */
+    padding-bottom: 0.3rem;
+}
+
+.navbar-brand img {
+    height: 50px; /* << TAMANHO DO LOGO AUMENTADO */
+    width: auto;  /* Mantém a proporção */
+    /* margin-right não é necessário aqui se usarmos uma classe de margem no div do texto */
+}
+
+.navbar-brand .brand-text-container { /* Novo container para o texto ao lado do logo */
+    margin-left: 12px; /* Espaço entre o logo e o texto */
+    line-height: 1.25; /* Ajusta para melhor empilhamento do texto */
+    display: flex; /* Permite que o h5 e o span se ajustem */
+    flex-direction: column; /* Coloca o h5 acima do span */
+    justify-content: center; /* Centraliza o texto verticalmente se o logo for mais alto */
+}
+
+.navbar-brand .brand-text-container h5 {
+    color: var(--light-text-color);
+    font-family: 'Montserrat', sans-serif; /* Garante a fonte de cabeçalho */
+    font-weight: 700; /* Mais negrito */
+    font-size: 1.1rem; /* Tamanho levemente aumentado para o título principal */
+    margin-bottom: 0; /* Remove margem inferior para o span ficar próximo */
+    letter-spacing: 0.5px; /* Opcional: ajuste o espaçamento entre letras */
+}
+
+.navbar-brand .brand-text-container span {
+    font-family: 'Lato', sans-serif; /* Garante a fonte do corpo para o subtítulo */
+    font-size: 0.8rem; /* Mantém o tamanho do subtítulo ou ajusta levemente */
+    color: var(--accent-color); /* Cor de destaque para a localização */
+    display: block; /* Garante que fique em sua própria linha abaixo do h5 */
+    font-weight: 400; /* Peso normal */
+}
+
+
+.navbar {
+    background-color: var(--primary-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--accent-color);
+}
+
+.navbar-toggler {
+    border-color: var(--accent-color);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 193, 7, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+
+.hero-banner {
+    background: url('../assets/images/banner-bricsagac2025-jp.jpg') no-repeat center center;
+    background-size: cover;
+    color: var(--light-text-color);
+    padding: 10rem 0;
+    position: relative;
+    text-align: center;
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(10, 35, 66, 0.7); /* Dark overlay */
+}
+
+.hero-banner .container {
+    position: relative; /* To ensure content is above overlay */
+    z-index: 2;
+}
+
+.hero-banner h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--light-text-color);
+}
+
+.hero-banner p.lead {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: rgba(255,255,255,0.9);
+}
+.hero-banner .date-location {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: #e0a800; /* Darker gold */
+    border-color: #e0a800;
+    color: var(--primary-color);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 600;
+}
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-color);
+}
+
+
+.section-padding {
+    padding: 60px 0;
+}
+
+.section-bg-light {
+    background-color: var(--light-background-color);
+}
+
+.page-header {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+    padding: 4rem 0;
+    margin-bottom: 40px;
+}
+.page-header h1 {
+    color: var(--light-text-color);
+}
+
+.card-speaker, .card-committee {
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+.card-speaker:hover, .card-committee:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+.card-speaker img, .card-committee img {
+    max-width: 150px; /* Adjust as needed */
+    height: auto;
+    border-radius: 0.3rem; /* For committee photos */
+}
+.card-speaker .card-img-top {
+     width: 100%;
+     height: 250px; /* Or aspect ratio */
+     object-fit: cover;
+     border-top-left-radius: 0.5rem;
+     border-top-right-radius: 0.5rem;
+}
+
+
+.important-dates ul {
+    list-style: none;
+    padding-left: 0;
+}
+.important-dates li {
+    padding: 10px 0;
+    border-bottom: 1px dashed #eee;
+}
+.important-dates li strong {
+    color: var(--secondary-color);
+}
+
+.organizers-logos img {
+    max-height: 70px;
+    margin: 15px;
+    filter: grayscale(50%);
+    transition: filter 0.3s ease;
+}
+.organizers-logos img:hover {
+    filter: grayscale(0%);
+}
+
+.programme-table th {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+}
+.programme-table .session-time {
+    font-weight: bold;
+    white-space: nowrap;
+    color: var(--secondary-color);
+}
+.programme-table .break-session {
+    background-color: #f9f9f9;
+    font-style: italic;
+}
+
+.registration-fees table {
+    margin-top: 20px;
+}
+.registration-fees th {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+}
+
+.attraction-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.footer {
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 30px 0;
+    font-size: 0.9rem;
+}
+.footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+.footer a:hover {
+    color: var(--light-text-color);
+    text-decoration: underline;
+}
+.footer-logo {
+    max-height: 50px; /* Adjust as needed */
+    margin-bottom: 10px;
+}
