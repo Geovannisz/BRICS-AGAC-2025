@@ -1,20 +1,23 @@
 /* css/style.css */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 :root {
     --primary-color: #0A2342; /* Deep Navy Blue */
-    --secondary-color: #006A4E; /* Brazilian Green */
+    --secondary-color: #007A58; /* Brazilian Green */
     --accent-color: #FFC107; /* Gold/Yellow */
+    --soft-accent-color: #F0E68C; /* Soft Gold/Beige */
     --background-color: #FFFFFF;
-    --light-background-color: #F8F9FA;
+    --neutral-light-color: #E9ECEF; /* Light Grey */
+    --light-background-color: var(--neutral-light-color);
     --text-color: #212529;
     --light-text-color: #FFFFFF;
     --bs-primary-rgb: 10, 35, 66; /* For Bootstrap components if overriding default primary */
-    --bs-secondary-rgb: 0, 106, 78; /* For Bootstrap components */
+    --bs-secondary-rgb: 0, 122, 88; /* For Bootstrap components */
 }
 
 body {
     font-family: 'Lato', sans-serif;
+    font-size: 1rem; /* Explicitly set body font size */
     color: var(--text-color);
     line-height: 1.7;
     background-color: var(--background-color);
@@ -23,8 +26,40 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
     color: var(--primary-color);
+    margin-bottom: 0.75rem; /* Consistent margin for headings */
+}
+
+h1 {
+    font-size: 2.75rem; /* approx 44px */
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 2.25rem; /* approx 36px */
+    font-weight: 700;
+    letter-spacing: -0.25px;
+}
+
+h3 {
+    font-size: 1.75rem; /* approx 28px */
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 1.25rem; /* approx 20px */
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 1.1rem; /* approx 17.6px */
+    font-weight: 600;
+}
+
+h6 {
+    font-size: 1rem; /* approx 16px */
+    font-weight: 600;
 }
 
 .navbar-brand {
@@ -109,7 +144,8 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(10, 35, 66, 0.7); /* Dark overlay */
+    /* background-color: rgba(10, 35, 66, 0.7); */ /* Dark overlay */
+    background: linear-gradient(to bottom, rgba(10, 35, 66, 0.65) 0%, rgba(10, 35, 66, 0.85) 100%); /* Subtle gradient */
 }
 
 .hero-banner .container {
@@ -119,27 +155,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-banner h1 {
     font-size: 3.5rem;
-    font-weight: 700;
+    font-weight: 800; /* Increased font weight */
     margin-bottom: 0.5rem;
     color: var(--light-text-color);
+    /* letter-spacing will be inherited from general h1, or can be overridden if needed */
 }
 
 .hero-banner p.lead {
     font-size: 1.5rem;
     margin-bottom: 2rem;
     color: rgba(255,255,255,0.9);
+    font-weight: 400; /* Lato regular */
 }
 .hero-banner .date-location {
     font-size: 1.2rem;
     color: var(--accent-color);
-    font-weight: 600;
+    font-weight: 700; /* Montserrat bold */
+}
+
+.btn-primary, .btn-secondary {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    font-weight: 600; /* Keep font-weight as specified or adjust if needed */
 }
 
 .btn-primary {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
     color: var(--primary-color);
-    font-weight: 600;
+    /* font-weight is now in the combined rule */
 }
 
 .btn-primary:hover {
@@ -152,7 +198,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: transparent;
     border-color: var(--accent-color);
     color: var(--accent-color);
-    font-weight: 600;
+    /* font-weight is now in the combined rule */
 }
 .btn-secondary:hover {
     background-color: var(--accent-color);
@@ -162,7 +208,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .section-padding {
-    padding: 60px 0;
+    padding: 70px 0; /* Increased padding */
 }
 
 .section-bg-light {
@@ -172,27 +218,52 @@ h1, h2, h3, h4, h5, h6 {
 .page-header {
     background-color: var(--secondary-color);
     color: var(--light-text-color);
-    padding: 4rem 0;
-    margin-bottom: 40px;
+    padding: 5rem 0; /* Increased padding */
+    margin-bottom: 50px; /* Increased margin */
+    border-bottom: 3px solid var(--accent-color); /* Subtle bottom border */
 }
 .page-header h1 {
     color: var(--light-text-color);
 }
 
-.card-speaker, .card-committee {
-    margin-bottom: 30px;
-    border: 1px solid #e0e0e0;
-    border-radius: 0.5rem;
-    transition: box-shadow 0.3s ease-in-out;
+/* General Card Styling - Overriding Bootstrap's .card */
+.card {
+    border: none; /* Remove default border */
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); /* Refined default shadow */
+    transition: box-shadow 0.2s ease-in-out; /* Smooth transition for hover */
+    border-radius: 0.5rem; /* Ensure consistent border-radius, BS default is 0.375rem */
 }
-.card-speaker:hover, .card-committee:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+
+.card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1); /* More pronounced hover shadow */
+}
+
+.card-speaker, .card-committee {
+    /* margin-bottom: 30px; */ /* Removed previously */
+    /* border: 1px solid #e0e0e0; */ /* Handled by .card now */
+    border-radius: 0.5rem; /* Kept for consistency if .card isn't always on the same element, though it should be */
+    /* transition: box-shadow 0.3s ease-in-out; */ /* Handled by .card now */
+    background-color: var(--background-color); /* Ensure background for standalone use */
+}
+/* .card-speaker:hover, .card-committee:hover are handled by .card:hover if they also have .card class */
+
+/* Styling for event highlight cards on homepage, assuming they have class .event-highlights and .card */
+.event-highlights .card {
+    background-color: var(--background-color); /* Or var(--neutral-light-color) if a slight tint is desired */
+    border-top: 4px solid var(--accent-color);
+}
+
+.event-highlights .card i { /* Example, assuming Font Awesome icons */
+    font-size: 2.5em; /* Larger icons */
+    margin-bottom: 0.75rem;
+    display: block; /* If needed for spacing */
+    color: var(--primary-color); /* Or var(--secondary-color) */
 }
 
 .card-speaker img, .card-committee img {
     max-width: 150px; /* Adjust as needed */
     height: auto;
-    border-radius: 0.3rem; /* For committee photos */
+    border-radius: 0.3rem; /* For committee photos, keep if specific */
 }
 .card-speaker .card-img-top {
      width: 100%;
@@ -208,7 +279,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-left: 0;
 }
 .important-dates li {
-    padding: 10px 0;
+    padding: 0.75rem 0; /* Standardized padding to rem */
     border-bottom: 1px dashed #eee;
 }
 .important-dates li strong {
@@ -228,15 +299,29 @@ h1, h2, h3, h4, h5, h6 {
 .programme-table th {
     background-color: var(--primary-color);
     color: var(--light-text-color);
+    border-bottom-width: 2px; /* Emphasize header bottom border */
 }
+
+.programme-table td, .programme-table th {
+    vertical-align: middle; /* Align content vertically */
+    padding: 0.9rem 0.75rem; /* Slightly more padding */
+}
+
 .programme-table .session-time {
-    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
     white-space: nowrap;
     color: var(--secondary-color);
 }
 .programme-table .break-session {
-    background-color: #f9f9f9;
+    background-color: var(--neutral-light-color); /* Updated background */
     font-style: italic;
+    color: var(--text-color); /* Ensure good contrast */
+}
+
+.programme-table {
+    margin-top: 2rem; /* Add some space above the table */
+    border: 1px solid #dee2e6; /* Standard Bootstrap border color for tables */
 }
 
 .registration-fees table {
@@ -255,12 +340,24 @@ h1, h2, h3, h4, h5, h6 {
 .footer {
     background-color: var(--primary-color);
     color: rgba(255, 255, 255, 0.7);
-    padding: 30px 0;
+    padding: 40px 0; /* Increased padding */
     font-size: 0.9rem;
+    text-align: center; /* Ensure text-align is set if not already by BS or other global style */
 }
+
+.footer p {
+    color: rgba(255, 255, 255, 0.8); /* Base color for footer paragraphs */
+    margin-bottom: 0.5rem; /* Consistent margin for footer paragraphs */
+}
+
+.footer p:last-of-type { /* Assumes the "5th BRICS-AGAC..." is the last paragraph */
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .footer a {
     color: var(--accent-color);
     text-decoration: none;
+    transition: color 0.2s ease-in-out; /* Smoother hover transition */
 }
 .footer a:hover {
     color: var(--light-text-color);
@@ -269,4 +366,138 @@ h1, h2, h3, h4, h5, h6 {
 .footer-logo {
     max-height: 50px; /* Adjust as needed */
     margin-bottom: 10px;
+}
+
+/* Old Speaker Card Enhancements removed/commented out for new .card-speaker-enhanced styles */
+/*
+.card-speaker .card-text.small {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+}
+
+.card-speaker .card-text.text-muted {
+    margin-bottom: 0.5rem;
+}
+
+.card-speaker .card-subtitle {
+    color: var(--secondary-color);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--neutral-light-color);
+}
+*/
+
+/* New Enhanced Speaker Card Styles */
+.card-speaker-enhanced {
+    background-color: var(--background-color); /* Ensure it's explicitly white */
+}
+
+.card-speaker-enhanced .card-body {
+    padding: 1.25rem; /* Standard padding */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure card body tries to fill card height for h-100 effect */
+}
+
+.card-speaker-enhanced .card-title { /* Speaker Name (h5) */
+    margin-bottom: 0.25rem; /* Tighter margin to affiliation */
+}
+
+.card-speaker-enhanced .text-muted { /* Affiliation */
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem; /* Existing 0.5rem was a bit tight before talk title */
+}
+
+.card-speaker-enhanced .card-subtitle { /* Talk Title (h6) */
+    color: var(--secondary-color);
+    font-weight: 600; /* Ensure it's distinct, matches other h6 */
+    font-size: 1rem; /* Ensure it's distinct, matches other h6 */
+    margin-top: 0.5rem; /* Reduced from 0.75rem */
+    padding-top: 0.5rem; /* Reduced from 0.75rem */
+    border-top: 1px solid var(--neutral-light-color);
+    margin-bottom: 0.75rem; /* Space before bio */
+}
+
+.card-speaker-enhanced .card-text.small { /* Bio */
+    font-size: 0.85rem; /* Slightly smaller if needed */
+    line-height: 1.6; /* Adjusted for new font size */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Reduced to 3 lines for a cleaner look */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Allows bio to take up remaining space */
+    margin-bottom: 0; /* Remove bottom margin if it's the last element */
+}
+
+/* Page Section Headers for Speaker Categories */
+.page-section-header {
+    /* text-align: center; is expected on the h2 element in HTML */
+    padding-bottom: 0.75rem;
+    margin-top: 2rem; /* More space above these major headers */
+    margin-bottom: 2rem; /* More space below before cards */
+    border-bottom: 2px solid var(--primary-color); /* More prominent border */
+    display: inline-block; /* To make border only as wide as text */
+    position: relative;
+}
+
+/* Enhanced Committee Card Styles */
+.card-committee-enhanced {
+    position: relative; /* For chairperson badge positioning */
+    background-color: var(--background-color);
+}
+
+.card-committee-enhanced .card-body {
+    display: flex;
+    align-items: center; /* Vertically align items if they have different natural heights */
+    padding: 1rem; /* Adjust padding as needed */
+}
+
+.card-committee-enhanced .member-avatar {
+    width: 80px;  /* Fixed width for avatar */
+    height: 80px; /* Fixed height for avatar */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem; /* Space between avatar and text */
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.card-committee-enhanced .member-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically if avatar is taller */
+    flex-grow: 1; /* Allow text info to take remaining space */
+}
+
+.card-committee-enhanced .card-title { /* Member Name (h5) */
+    margin-bottom: 0.25rem; /* Tighter margin to affiliation */
+}
+
+.card-committee-enhanced .text-muted { /* Affiliation */
+    font-size: 0.9rem;
+    margin-bottom: 0; /* No margin if it's the last item in this context */
+}
+.card-committee-enhanced .text-muted i { /* Icon in affiliation */
+    font-size: 0.85em; /* Slightly smaller icon if needed */
+}
+
+/* Chairperson Badge Styling */
+.card-committee-enhanced.is-chair::before {
+    content: "Chair";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    border-top-right-radius: 0.5rem; /* Match card's border radius */
+    border-bottom-left-radius: 0.5rem;
+    z-index: 1;
 }
