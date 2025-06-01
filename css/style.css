@@ -368,26 +368,136 @@ h6 {
     margin-bottom: 10px;
 }
 
-/* Speaker Card Enhancements */
-.card-speaker .card-text.small { /* Speaker Bio */
+/* Old Speaker Card Enhancements removed/commented out for new .card-speaker-enhanced styles */
+/*
+.card-speaker .card-text.small {
     display: -webkit-box;
-    -webkit-line-clamp: 4; /* Show approximately 4 lines */
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.5; /* Adjust if needed for better fit with 4 lines */
-    /* The 'small' class from Bootstrap handles font-size, which should be fine. */
+    line-height: 1.5;
 }
 
-.card-speaker .card-text.text-muted { /* Speaker Affiliation */
-    margin-bottom: 0.5rem; /* Reduce bottom margin before the talk title */
+.card-speaker .card-text.text-muted {
+    margin-bottom: 0.5rem;
 }
 
-.card-speaker .card-subtitle { /* Speaker Talk Title */
-    color: var(--secondary-color); /* Use theme's secondary color */
-    /* font-weight and font-size will be inherited from general h6 styles */
-    margin-top: 0.75rem; /* Add some space above the talk title */
-    padding-top: 0.75rem; /* Add padding for the border */
-    border-top: 1px solid var(--neutral-light-color); /* Subtle top border */
-    /* mb-2 class from HTML will handle bottom margin */
+.card-speaker .card-subtitle {
+    color: var(--secondary-color);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--neutral-light-color);
+}
+*/
+
+/* New Enhanced Speaker Card Styles */
+.card-speaker-enhanced {
+    background-color: var(--background-color); /* Ensure it's explicitly white */
+}
+
+.card-speaker-enhanced .card-body {
+    padding: 1.25rem; /* Standard padding */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure card body tries to fill card height for h-100 effect */
+}
+
+.card-speaker-enhanced .card-title { /* Speaker Name (h5) */
+    margin-bottom: 0.25rem; /* Tighter margin to affiliation */
+}
+
+.card-speaker-enhanced .text-muted { /* Affiliation */
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem; /* Existing 0.5rem was a bit tight before talk title */
+}
+
+.card-speaker-enhanced .card-subtitle { /* Talk Title (h6) */
+    color: var(--secondary-color);
+    font-weight: 600; /* Ensure it's distinct, matches other h6 */
+    font-size: 1rem; /* Ensure it's distinct, matches other h6 */
+    margin-top: 0.5rem; /* Reduced from 0.75rem */
+    padding-top: 0.5rem; /* Reduced from 0.75rem */
+    border-top: 1px solid var(--neutral-light-color);
+    margin-bottom: 0.75rem; /* Space before bio */
+}
+
+.card-speaker-enhanced .card-text.small { /* Bio */
+    font-size: 0.85rem; /* Slightly smaller if needed */
+    line-height: 1.6; /* Adjusted for new font size */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Reduced to 3 lines for a cleaner look */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Allows bio to take up remaining space */
+    margin-bottom: 0; /* Remove bottom margin if it's the last element */
+}
+
+/* Page Section Headers for Speaker Categories */
+.page-section-header {
+    /* text-align: center; is expected on the h2 element in HTML */
+    padding-bottom: 0.75rem;
+    margin-top: 2rem; /* More space above these major headers */
+    margin-bottom: 2rem; /* More space below before cards */
+    border-bottom: 2px solid var(--primary-color); /* More prominent border */
+    display: inline-block; /* To make border only as wide as text */
+    position: relative;
+}
+
+/* Enhanced Committee Card Styles */
+.card-committee-enhanced {
+    position: relative; /* For chairperson badge positioning */
+    background-color: var(--background-color);
+}
+
+.card-committee-enhanced .card-body {
+    display: flex;
+    align-items: center; /* Vertically align items if they have different natural heights */
+    padding: 1rem; /* Adjust padding as needed */
+}
+
+.card-committee-enhanced .member-avatar {
+    width: 80px;  /* Fixed width for avatar */
+    height: 80px; /* Fixed height for avatar */
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem; /* Space between avatar and text */
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.card-committee-enhanced .member-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically if avatar is taller */
+    flex-grow: 1; /* Allow text info to take remaining space */
+}
+
+.card-committee-enhanced .card-title { /* Member Name (h5) */
+    margin-bottom: 0.25rem; /* Tighter margin to affiliation */
+}
+
+.card-committee-enhanced .text-muted { /* Affiliation */
+    font-size: 0.9rem;
+    margin-bottom: 0; /* No margin if it's the last item in this context */
+}
+.card-committee-enhanced .text-muted i { /* Icon in affiliation */
+    font-size: 0.85em; /* Slightly smaller icon if needed */
+}
+
+/* Chairperson Badge Styling */
+.card-committee-enhanced.is-chair::before {
+    content: "Chair";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    border-top-right-radius: 0.5rem; /* Match card's border radius */
+    border-bottom-left-radius: 0.5rem;
+    z-index: 1;
 }
