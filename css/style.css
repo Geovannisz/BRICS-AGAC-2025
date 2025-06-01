@@ -367,3 +367,27 @@ h6 {
     max-height: 50px; /* Adjust as needed */
     margin-bottom: 10px;
 }
+
+/* Speaker Card Enhancements */
+.card-speaker .card-text.small { /* Speaker Bio */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Show approximately 4 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5; /* Adjust if needed for better fit with 4 lines */
+    /* The 'small' class from Bootstrap handles font-size, which should be fine. */
+}
+
+.card-speaker .card-text.text-muted { /* Speaker Affiliation */
+    margin-bottom: 0.5rem; /* Reduce bottom margin before the talk title */
+}
+
+.card-speaker .card-subtitle { /* Speaker Talk Title */
+    color: var(--secondary-color); /* Use theme's secondary color */
+    /* font-weight and font-size will be inherited from general h6 styles */
+    margin-top: 0.75rem; /* Add some space above the talk title */
+    padding-top: 0.75rem; /* Add padding for the border */
+    border-top: 1px solid var(--neutral-light-color); /* Subtle top border */
+    /* mb-2 class from HTML will handle bottom margin */
+}
