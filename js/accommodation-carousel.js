@@ -2,13 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const hotelCards = document.querySelectorAll('.hotel-card');
 
     hotelCards.forEach(card => {
+        const mainImageContainer = card.querySelector('.main-image-container');
         const mainImage = card.querySelector('.main-image');
         const thumbnails = card.querySelectorAll('.thumbnail');
         let currentIndex = 0;
-        let intervalId;
+        let intervalId = null;
 
         function updateMainImage(index) {
-            mainImage.src = thumbnails[index].src;
+            // Not found
+            if (index < 0 || index >= thumbnails.length) {
+                return;
+            }
+
+            mainImage.src = thumbnails[index].src.replace('thumbnail', 'main');
             thumbnails.forEach((thumb, i) => {
                 thumb.classList.toggle('active', i === index);
             });
@@ -16,27 +22,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function startCarousel() {
+            // Clear any existing interval
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
             intervalId = setInterval(() => {
-                let nextIndex = (currentIndex + 1) % thumbnails.length;
+                const nextIndex = (currentIndex + 1) % thumbnails.length;
                 updateMainImage(nextIndex);
             }, 4000);
         }
 
         function stopCarousel() {
             clearInterval(intervalId);
+            intervalId = null;
         }
 
         thumbnails.forEach((thumbnail, index) => {
             thumbnail.addEventListener('click', () => {
-                stopCarousel();
                 updateMainImage(index);
-                startCarousel();
+                // When the user manually selects an image, we stop the automatic carousel
+                stopCarousel();
             });
         });
 
-        card.addEventListener('mouseenter', stopCarousel);
-        card.addEventListener('mouseleave', startCarousel);
+        // Stop carousel on mouse enter
+        mainImageContainer.addEventListener('mouseenter', stopCarousel);
 
+        // Restart carousel on mouse leave
+        mainImageContainer.addEventListener('mouseleave', startCarousel);
+
+        // Start the carousel initially
         startCarousel();
     });
 });
