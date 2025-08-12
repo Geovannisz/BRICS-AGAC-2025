@@ -1,0 +1,30 @@
+/* Custom Styles for the Shirts Page */
+
+.card .card-title {
+    color: var(--primary-color);
+}
+
+#shirts-order-form .table td {
+    vertical-align: middle;
+}
+
+#shirts-order-form .table input[type="number"] {
+    max-width: 80px;
+    text-align: center;
+}
+
+#shirts-order-form .form-label.h4 {
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.page-header {
+    background: var(--primary-color);
+    color: #ffffff;
+    padding: 4rem 0;
+}
+
+.page-header .page-title {
+    font-size: 3rem;
+    font-weight: 700;
+}
