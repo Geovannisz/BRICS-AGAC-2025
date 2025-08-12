@@ -1,0 +1,50 @@
+/* Custom Styles for the Shirts Page */
+
+.shirt-card {
+    border: 1px solid #dee2e6;
+    transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.shirt-card:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    transform: translateY(-5px);
+}
+
+.shirt-card .card-header {
+    background-color: var(--primary-color);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.shirt-card .card-header .card-title {
+    font-size: 1.25rem;
+    color: #fff;
+}
+
+.shirt-card .price-tag {
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-color: var(--secondary-color);
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+}
+
+.shirt-card .shirt-image {
+    padding: 1rem;
+    background-color: #f8f9fa;
+}
+
+.size-table td {
+    vertical-align: middle;
+    padding: 0.4rem;
+}
+
+.size-table input[type="number"] {
+    max-width: 70px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
