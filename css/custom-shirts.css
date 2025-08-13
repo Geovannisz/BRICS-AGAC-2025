@@ -1,5 +1,34 @@
 /* Custom Styles for the Shirts Page */
 
+/* Product Showcase Section */
+.product-showcase {
+    background-color: #f8f9fa; /* Light grey background to separate it from the rest of the page */
+}
+
+.product-showcase .section-title {
+    margin-bottom: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.product-showcase .shirt-view-title {
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.product-showcase img {
+    border: 3px solid #fff;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.product-showcase img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+
+/* Shirt Card Styles */
 .shirt-card {
     border: 1px solid #dee2e6;
     transition: box-shadow .3s ease-in-out, transform .3s ease-in-out;
@@ -32,19 +61,43 @@
     border-radius: 5px;
 }
 
-.shirt-card .shirt-image {
-    padding: 1rem;
-    background-color: #f8f9fa;
+.order-form-header .section-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-.size-table td {
+.size-guide-reference {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.size-guide-img {
+    max-width: 150px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.size-table {
+    font-size: 0.9rem;
+}
+
+.size-table th, .size-table td {
     vertical-align: middle;
-    padding: 0.4rem;
+    text-align: center;
+    padding: 0.5rem;
 }
 
 .size-table input[type="number"] {
-    max-width: 70px;
+    max-width: 65px;
     text-align: center;
     border: 1px solid #ced4da;
     border-radius: .25rem;
+    padding: 0.3rem;
+}
+
+.size-table thead {
+    background-color: var(--primary-color) !important; /* Overriding bootstrap's table-dark for consistency */
 }
