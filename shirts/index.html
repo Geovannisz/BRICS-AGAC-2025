@@ -78,18 +78,46 @@
         </div>
     </header>
 
+    <!-- Product Showcase Section -->
+    <section class="product-showcase text-center section-padding pb-0">
+        <div class="container">
+            <h2 class="section-title">The Official BRICS-AGAC 2025 Shirt</h2>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-5">
+                    <img src="/assets/images/shirts/frente.png" alt="Front of the event t-shirt" class="img-fluid rounded shadow-sm">
+                    <h3 class="shirt-view-title h4 mt-3">Front View</h3>
+                </div>
+                <div class="col-md-5">
+                    <img src="/assets/images/shirts/verso.png" alt="Back of the event t-shirt" class="img-fluid rounded shadow-sm">
+                    <h3 class="shirt-view-title h4 mt-3">Back View</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
     <main class="section-padding">
         <div class="container">
-            <div class="text-center mb-5">
-                <p class="lead">Please select the quantity for each shirt model you wish to order. You must provide your name and select at least one shirt to submit the form.</p>
+            <div class="order-form-header text-center mb-5">
+                <h2 class="section-title">Place Your Order</h2>
+                <p class="lead">Select your desired models and sizes below. You must provide your name, email, and select at least one shirt to submit the form.</p>
+                <div class="size-guide-reference">
+                    <img src="/assets/images/shirts/tamanho.png" alt="Size measurement guide" class="size-guide-img">
+                    <small class="form-text text-muted">Measurements are taken as shown:<br>(A) Width and (B) Height.</small>
+                </div>
             </div>
 
             <form id="shirts-order-form" action="https://formcarry.com/s/lABf_q6FCut" method="POST">
 
-                <div class="mb-5">
-                    <label for="fullName" class="form-label h4">Full Name</label>
-                    <input type="text" class="form-control form-control-lg" id="fullName" name="fullName" required>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="fullName" class="form-label h4">Full Name</label>
+                        <input type="text" class="form-control form-control-lg" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="email" class="form-label h4">Email Address</label>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" required>
+                    </div>
                 </div>
 
                 <input type="hidden" name="_next" value="https://bricsagac.com.br/shirts/thank-you.html">
@@ -102,18 +130,26 @@
                                 <h3 class="card-title mb-0">Basic T-Shirt</h3>
                                 <span class="price-tag">$11.00 USD</span>
                             </div>
-                            <img src="/assets/images/shirts/basica.png" alt="Basic T-shirt Sizes" class="card-img-top shirt-image">
                             <div class="card-body">
                                 <p class="card-text text-muted">A classic-fit t-shirt for all-day comfort.</p>
+                                <!-- Size and Quantity Table -->
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-borderless size-table">
+                                    <table class="table table-bordered table-striped size-table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Size</th>
+                                                <th>Width (A)</th>
+                                                <th>Height (B)</th>
+                                                <th>Qty</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                            <tr><td>PP</td><td><input type="number" name="basic_tshirt_pp" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>P (Small)</td><td><input type="number" name="basic_tshirt_p" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>M (Medium)</td><td><input type="number" name="basic_tshirt_m" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>G (Large)</td><td><input type="number" name="basic_tshirt_g" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>GG (XL)</td><td><input type="number" name="basic_tshirt_gg" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>XGG (XXL)</td><td><input type="number" name="basic_tshirt_xgg" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>PP</td><td>47 cm</td><td>63 cm</td><td><input type="number" name="basic_tshirt_pp" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>P (Small)</td><td>49 cm</td><td>67 cm</td><td><input type="number" name="basic_tshirt_p" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>M (Medium)</td><td>54 cm</td><td>69 cm</td><td><input type="number" name="basic_tshirt_m" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>G (Large)</td><td>57 cm</td><td>73 cm</td><td><input type="number" name="basic_tshirt_g" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>GG (XL)</td><td>62 cm</td><td>77 cm</td><td><input type="number" name="basic_tshirt_gg" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>XGG (XXL)</td><td>64 cm</td><td>80 cm</td><td><input type="number" name="basic_tshirt_xgg" class="form-control" value="0" min="0"></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -128,16 +164,24 @@
                                 <h3 class="card-title mb-0">Baby Look (Fitted)</h3>
                                 <span class="price-tag">$11.00 USD</span>
                             </div>
-                            <img src="/assets/images/shirts/babylook.png" alt="Baby Look T-shirt Sizes" class="card-img-top shirt-image">
                             <div class="card-body">
                                 <p class="card-text text-muted">A stylish, fitted t-shirt for a more modern look.</p>
+                                <!-- Size and Quantity Table -->
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-borderless size-table">
+                                    <table class="table table-bordered table-striped size-table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Size</th>
+                                                <th>Width (A)</th>
+                                                <th>Height (B)</th>
+                                                <th>Qty</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                            <tr><td>P (Small)</td><td><input type="number" name="babylook_tshirt_p" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>M (Medium)</td><td><input type="number" name="babylook_tshirt_m" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>G (Large)</td><td><input type="number" name="babylook_tshirt_g" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>GG (XL)</td><td><input type="number" name="babylook_tshirt_gg" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>P (Small)</td><td>43 cm</td><td>59 cm</td><td><input type="number" name="babylook_tshirt_p" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>M (Medium)</td><td>46 cm</td><td>62 cm</td><td><input type="number" name="babylook_tshirt_m" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>G (Large)</td><td>49 cm</td><td>66 cm</td><td><input type="number" name="babylook_tshirt_g" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>GG (XL)</td><td>54 cm</td><td>69 cm</td><td><input type="number" name="babylook_tshirt_gg" class="form-control" value="0" min="0"></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -152,18 +196,26 @@
                                 <h3 class="card-title mb-0">Kids T-Shirt</h3>
                                 <span class="price-tag">$11.00 USD</span>
                             </div>
-                            <img src="/assets/images/shirts/kids.png" alt="Kids T-shirt Sizes" class="card-img-top shirt-image">
                             <div class="card-body">
                                 <p class="card-text text-muted">Comfortable and durable, perfect for young attendees.</p>
+                                <!-- Size and Quantity Table -->
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-borderless size-table">
+                                    <table class="table table-bordered table-striped size-table">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Size</th>
+                                                <th>Width (A)</th>
+                                                <th>Height (B)</th>
+                                                <th>Qty</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                            <tr><td>2 Years</td><td><input type="number" name="kids_tshirt_2" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>4 Years</td><td><input type="number" name="kids_tshirt_4" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>6 Years</td><td><input type="number" name="kids_tshirt_6" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>8 Years</td><td><input type="number" name="kids_tshirt_8" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>10 Years</td><td><input type="number" name="kids_tshirt_10" class="form-control" value="0" min="0"></td></tr>
-                                            <tr><td>12 Years</td><td><input type="number" name="kids_tshirt_12" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>2 Years</td><td>32 cm</td><td>42 cm</td><td><input type="number" name="kids_tshirt_2" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>4 Years</td><td>34 cm</td><td>46 cm</td><td><input type="number" name="kids_tshirt_4" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>6 Years</td><td>36 cm</td><td>49 cm</td><td><input type="number" name="kids_tshirt_6" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>8 Years</td><td>39 cm</td><td>51 cm</td><td><input type="number" name="kids_tshirt_8" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>10 Years</td><td>42 cm</td><td>54 cm</td><td><input type="number" name="kids_tshirt_10" class="form-control" value="0" min="0"></td></tr>
+                                            <tr><td>12 Years</td><td>44 cm</td><td>56 cm</td><td><input type="number" name="kids_tshirt_12" class="form-control" value="0" min="0"></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
