@@ -501,3 +501,104 @@ h6 {
     border-bottom-left-radius: 0.5rem;
     z-index: 1;
 }
+
+/* --- Payment Information Section --- */
+.payment-info-section {
+    background-color: #f8f9fa;
+    padding: 2.5rem 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    margin-top: 3rem;
+}
+
+.payment-info-section .section-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.payment-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.payment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.payment-card-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.payment-card-header .icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-right: 1rem;
+}
+
+.payment-card-header .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.payment-card .details {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.payment-card .details li {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    word-break: break-all;
+}
+
+.payment-card .details strong {
+    color: #343a40;
+    min-width: 120px;
+    display: inline-block;
+}
+
+.payment-card .note {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-top: 1rem;
+}
+
+.payment-instructions {
+    margin-top: 2.5rem;
+}
+
+.payment-instructions .alert {
+    padding: 1.5rem;
+    font-size: 1.05rem;
+    border-left-width: 5px;
+}
+
+.payment-instructions .alert strong {
+    font-size: 1.1rem;
+}
+
+.payment-instructions .alert ul {
+    margin-top: 1rem;
+    padding-left: 1.5rem;
+    margin-bottom: 0;
+}
+
+.payment-instructions .alert li {
+    margin-bottom: 0.5rem;
+}
