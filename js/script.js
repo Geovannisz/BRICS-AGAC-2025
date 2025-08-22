@@ -2,27 +2,41 @@
 
 // Function to set the language of the page
 function setLanguage(lang) {
-    console.log(`Setting language to: ${lang}`);
-    const elements = document.querySelectorAll('[data-lang-en], [data-lang-pt]');
-    console.log(`Found ${elements.length} elements to translate.`);
+    // --- Translate standard text content ---
+    const elements = document.querySelectorAll('[data-lang-en]');
     elements.forEach(el => {
         const text = el.getAttribute(`data-lang-${lang}`);
-        if (text) {
-            // Use innerHTML to correctly render tags like <i> and <strong>
+        if (text !== null) {
             el.innerHTML = text;
-            console.log(`Translated element to: ${text}`);
-        } else {
-            console.log('No translation found for element:', el);
         }
     });
 
+    // --- Translate placeholder attributes ---
+    const placeholders = document.querySelectorAll('[data-lang-en-placeholder]');
+    placeholders.forEach(el => {
+        const placeholderText = el.getAttribute(`data-lang-${lang}-placeholder`);
+        if (placeholderText !== null) {
+            el.placeholder = placeholderText;
+        }
+    });
+
+    // --- Translate title attribute ---
+    const pageTitle = document.querySelector('title[data-lang-en]');
+    if (pageTitle) {
+        const titleText = pageTitle.getAttribute(`data-lang-${lang}`);
+        if (titleText !== null) {
+            document.title = titleText;
+        }
+    }
+
+
+    // --- Update UI state ---
     // Update active state on language switcher
     document.getElementById('lang-switcher-en').style.fontWeight = (lang === 'en') ? 'bold' : 'normal';
     document.getElementById('lang-switcher-pt').style.fontWeight = (lang === 'pt') ? 'bold' : 'normal';
 
     // Save preference to localStorage
     localStorage.setItem('brics-agac-lang', lang);
-    console.log('Language preference saved to localStorage.');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
