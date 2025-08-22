@@ -1,7 +1,39 @@
 import os
 from bs4 import BeautifulSoup, NavigableString
 
-def add_lang_switcher(soup):
+def wrap_text_in_span(tag, translations):
+    """
+    Finds direct child text nodes of a tag and wraps them in a <span>
+    with translation attributes if a translation exists.
+    """
+    # Use a list of contents to be able to modify it
+    contents = list(tag.contents)
+    for i, content in enumerate(contents):
+        if isinstance(content, NavigableString) and content.string.strip():
+            text = content.string.strip()
+            if text in translations:
+                # Create a new span tag
+                span = BeautifulSoup(features="html.parser").new_tag("span")
+                span['data-lang-en'] = text
+                span['data-lang-pt'] = translations[text]
+                span.string = text
+                # Replace the original text node with the new span
+                contents[i] = span
+    # Replace the tag's contents with the new modified list
+    tag.clear()
+    for item in contents:
+        tag.append(item)
+
+
+def process_html_file(filepath, translations):
+    """
+    Processes a single HTML file to add translation attributes.
+    """
+    print(f"Processing {filepath}...")
+    with open(filepath, 'r', encoding='utf-8') as f:
+        soup = BeautifulSoup(f, 'html.parser')
+
+    # Add language switcher if not present
     navbar = soup.find('ul', class_='navbar-nav')
     if navbar and not soup.find('a', id='lang-switcher-en'):
         lang_switcher_html = """
@@ -13,40 +45,37 @@ def add_lang_switcher(soup):
         """
         navbar.append(BeautifulSoup(lang_switcher_html, 'html.parser'))
 
-def translate_element(tag, translations):
-    # This function is now more careful. It will only translate a tag if it has direct text content.
-    if tag.string and tag.string.strip():
-        original_text = tag.string.strip()
-        if original_text in translations and not tag.has_attr('data-lang-en'):
-            portuguese_text = translations[original_text]
-            tag['data-lang-en'] = original_text
-            tag['data-lang-pt'] = portuguese_text
+    # Tags to search for text to translate
+    tags_to_scan = ['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'button', 'label', 'small', 'td', 'th', 'em']
 
-def process_html_file(filepath, translations):
-    print(f"Processing {filepath}")
-    with open(filepath, 'r', encoding='utf-8') as f:
-        soup = BeautifulSoup(f, 'html.parser')
+    for tag_name in tags_to_scan:
+        for tag in soup.find_all(tag_name):
+            # If the tag has no other element children, we can translate it directly
+            if not tag.find_all(True, recursive=False) and tag.string and tag.string.strip():
+                 original_text = tag.string.strip()
+                 if original_text in translations and not tag.has_attr('data-lang-en'):
+                     tag['data-lang-en'] = original_text
+                     tag['data-lang-pt'] = translations[original_text]
+            # If the tag has mixed content, wrap the text nodes
+            else:
+                wrap_text_in_span(tag, translations)
 
-    add_lang_switcher(soup)
-
-    # Translate all specified tags
-    tags_to_translate = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'a', 'span', 'li', 'strong', 'button', 'label', 'small', 'td', 'th']
-    for tag in soup.find_all(tags_to_translate):
-         translate_element(tag, translations)
-
-    # Special handling for the page <title>
+    # Handle the <title> tag separately
     if soup.title and soup.title.string:
         original_title = soup.title.string.strip()
-        if original_title in translations:
+        if original_title in translations and not soup.title.has_attr('data-lang-en'):
             soup.title['data-lang-en'] = original_title
             soup.title['data-lang-pt'] = translations[original_title]
-
 
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(str(soup.prettify(formatter="html5")))
 
 if __name__ == "__main__":
+    # This dictionary is now the single source of truth for all translations.
     translations = {
+        # ... (all the translations I gathered before will be pasted here)
+        # I will omit the giant dictionary for brevity in this thought block,
+        # but the full dictionary will be in the file.
         # =====================================================================
         # == General / Shared Content
         # =====================================================================
@@ -78,7 +107,6 @@ if __name__ == "__main__":
         "Abstract Submission | BRICS-AGAC 2025": "Submissão de Resumos | BRICS-AGAC 2025",
         "Venue & Travel | BRICS-AGAC 2025": "Local e Viagem | BRICS-AGAC 2025",
         "Accommodation | BRICS-AGAC 2025": "Hospedagem | BRICS-AGAC 2025",
-        "Explore João Pessoa | BRICS-AGAC 2025": "Explore João Pessoa | BRICS-AGAC 2025",
         "BINGO Program | BRICS-AGAC 2025": "Programa BINGO | BRICS-AGAC 2025",
         "Contact Us | BRICS-AGAC 2025": "Contato | BRICS-AGAC 2025",
 
@@ -232,9 +260,27 @@ if __name__ == "__main__":
         "On-Campus at UFPB": "No Campus da UFPB",
         "Restaurante Universitário (RU)": "Restaurante Universitário (RU)",
         "Phone:": "Telefone:",
-        "The organizing committee is exploring the possibility of providing free lunch vouchers for participants.": "O comitê organizador está explorando a possibilidade de fornecer vales-refeição gratuitos para os participantes.",
+        "Note: The organizing committee is exploring the possibility of providing free lunch vouchers for participants.": "Nota: O comitê organizador está explorando a possibilidade de fornecer vales-refeição gratuitos para os participantes.",
         "Cozinha Caseira (near Central de Aulas)": "Cozinha Caseira (próximo à Central de Aulas)",
         "Off-Campus (Bancários Neighborhood)": "Fora do Campus (Bairro dos Bancários)",
+        "Coelho's Restaurante": "Coelho's Restaurante",
+        "Domani Restaurante": "Domani Restaurante",
+        "Felipe Restaurante": "Felipe Restaurante",
+        "Bistrô Mariwô": "Bistrô Mariwô",
+        "R. Ver. Jo&atilde;o Freire - Castelo Branco, Jo&atilde;o Pessoa - PB, 58050-585": "R. Ver. Jo&atilde;o Freire - Castelo Branco, Jo&atilde;o Pessoa - PB, 58050-585",
+        "+55 (83) 3216-7876": "+55 (83) 3216-7876",
+        "Via Expressa Padre Z&eacute;, 173 - Castelo Branco III, Jo&atilde;o Pessoa - PB": "Via Expressa Padre Z&eacute;, 173 - Castelo Branco III, Jo&atilde;o Pessoa - PB",
+        "+55 (83) 98230-2504": "+55 (83) 98230-2504",
+        "Via Ip&ecirc; Amarelo, Pr&oacute;ximo a - Castelo Branco, Jo&atilde;o Pessoa - PB, 58051-900": "Via Ip&ecirc; Amarelo, Pr&oacute;ximo a - Castelo Branco, Jo&atilde;o Pessoa - PB, 58051-900",
+        "+55 (83) 99637-3969": "+55 (83) 99637-3969",
+        "R. Djalma Coelho, 20 - Banc&aacute;rios, Jo&atilde;o Pessoa - PB, 58051-124": "R. Djalma Coelho, 20 - Banc&aacute;rios, Jo&atilde;o Pessoa - PB, 58051-124",
+        "+55 (83) 3235-2859": "+55 (83) 3235-2859",
+        "R. Empres&aacute;rio Jo&atilde;o Rodrigues Alves, 360 - Jardim Sao Paulo, Jo&atilde;o Pessoa - PB, 58051-000": "R. Empres&aacute;rio Jo&atilde;o Rodrigues Alves, 360 - Jardim Sao Paulo, Jo&atilde;o Pessoa - PB, 58051-000",
+        "+55 (83) 3235-5858": "+55 (83) 3235-5858",
+        "Contorno da UFPB - R. Jos&eacute; Serrano Navarro, 424 - Castelo Branco, Jo&atilde;o Pessoa - PB, 58050-580": "Contorno da UFPB - R. Jos&eacute; Serrano Navarro, 424 - Castelo Branco, Jo&atilde;o Pessoa - PB, 58050-580",
+        "+55 (83) 99628-9735": "+55 (83) 99628-9735",
+        "R. Onaldo da Silva Coutinho, 191 - Castelo Branco III, Jo&atilde;o Pessoa - PB, 58050-600": "R. Onaldo da Silva Coutinho, 191 - Castelo Branco III, Jo&atilde;o Pessoa - PB, 58050-600",
+        "+55 (83) 98781-7067": "+55 (83) 98781-7067",
 
         # =====================================================================
         # == Accommodation Page (accommodation/index.html)
@@ -380,7 +426,6 @@ if __name__ == "__main__":
         "Submit My Choices & Proceed to Payment": "Enviar Minhas Escolhas e Prosseguir para o Pagamento",
     }
 
-
     files_to_process = [
         'abstract-submission/index.html',
         'accommodation/index.html',
@@ -396,7 +441,7 @@ if __name__ == "__main__":
         'venue-travel/index.html',
     ]
 
-    for file in files_to_process:
-        process_html_file(file, translations)
+    for file_path in files_to_process:
+        process_html_file(file_path, translations)
 
-    print("Done.")
+    print("\nScript finished applying all translations.")
