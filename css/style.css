@@ -602,3 +602,7 @@ h6 {
 .payment-instructions .alert li {
     margin-bottom: 0.5rem;
 }
+
+.lang-switcher-container {
+    margin-left: 20px;
+}
