@@ -604,5 +604,29 @@ h6 {
 }
 
 .lang-switcher-container {
-    margin-left: 20px;
+    margin-left: 15px; /* Reduced margin slightly */
+    display: flex; /* Use flexbox to align items */
+    align-items: center;
+    border: 1px solid rgba(255, 193, 7, 0.5); /* Softer border */
+    border-radius: 5px;
+    padding: 2px; /* Padding to create space around the links */
+}
+
+.lang-switcher-container .nav-link {
+    color: rgba(255, 255, 255, 0.85); /* Revert to default nav-link color */
+    padding: 0.2rem 0.5rem; /* Vertical and horizontal padding */
+    border-radius: 3px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.lang-switcher-container .nav-link:hover,
+.lang-switcher-container .nav-link.active {
+    background-color: var(--accent-color);
+    color: var(--primary-color); /* Change text color for contrast on hover */
+}
+
+.lang-switcher-container .nav-link.disabled {
+    color: rgba(255, 255, 255, 0.5); /* Make the '/' separator less prominent */
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
 }
