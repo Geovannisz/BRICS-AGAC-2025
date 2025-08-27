@@ -13,7 +13,7 @@ def add_lang_switcher(soup):
     navbar = soup.find('ul', class_='navbar-nav')
     if navbar and not soup.find('a', id='lang-switcher-en'):
         lang_switcher_html = """
-        <li class="nav-item d-flex align-items-center">
+        <li class="nav-item d-flex align-items-center lang-switcher-container">
             <a class="nav-link lang-switcher" href="#" id="lang-switcher-en" style="font-weight: bold;">EN</a>
             <span class="nav-link disabled" style="padding: 0 0.25rem;">/</span>
             <a class="nav-link lang-switcher" href="#" id="lang-switcher-pt">PT</a>
