@@ -38,35 +38,32 @@
 }
 
 .payment-card .copy-btn {
-    background: none;
+    background-color: #e9ecef;
     border: none;
     cursor: pointer;
-    margin-left: 8px;
-    color: #007bff;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
+    margin-left: 10px;
+    color: #495057;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%; /* Makes the button circular */
     transition: background-color 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .payment-card .copy-btn:hover {
-    background-color: #f0f0f0;
+    background-color: #ced4da;
 }
 
-.payment-card .copy-btn .fa-copy {
-    pointer-events: none; /* Make sure the icon doesn't capture click events */
+.payment-card .copy-btn:active {
+    background-color: #adb5bd;
 }
 
-.payment-card .copy-feedback {
-    font-size: 0.8em;
+.payment-card .copy-btn .check-icon {
+    display: none; /* Hidden by default */
     color: green;
-    margin-left: 5px;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 1s, opacity 1s;
-}
-
-.payment-card .copy-feedback.visible {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 1s;
+    font-size: 1.1em;
 }

@@ -84,33 +84,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Copy to Clipboard Functionality ---
     document.body.addEventListener('click', function(e) {
-        if (e.target.classList.contains('copy-btn')) {
-            const valueToCopy = e.target.getAttribute('data-copy-value');
-            const feedbackElement = e.target.querySelector('.copy-feedback');
+        // We check the closest button in case the user clicks the icon inside the button
+        const copyButton = e.target.closest('.copy-btn');
+        if (copyButton) {
+            // Prevent form submission if the button is inside a form
+            e.preventDefault();
+
+            const valueToCopy = copyButton.getAttribute('data-copy-value');
+            const copyIcon = copyButton.querySelector('.fa-copy');
+            const checkIcon = copyButton.querySelector('.fa-check');
+
+            // Check if clipboard API is available
+            if (!navigator.clipboard) {
+                alert('Clipboard API not available. Please copy the text manually. This may be due to an insecure (non-HTTPS) connection.');
+                return;
+            }
 
             navigator.clipboard.writeText(valueToCopy).then(() => {
-                // Show feedback
-                if (feedbackElement) {
-                    feedbackElement.classList.add('visible');
-                    // Hide feedback after 2 seconds
+                // Success: show checkmark
+                if (copyIcon && checkIcon) {
+                    copyIcon.style.display = 'none';
+                    checkIcon.style.display = 'inline-block';
+
+                    // Revert back to copy icon after 3 seconds
                     setTimeout(() => {
-                        feedbackElement.classList.remove('visible');
-                    }, 2000);
+                        copyIcon.style.display = 'inline-block';
+                        checkIcon.style.display = 'none';
+                    }, 3000);
                 }
             }).catch(err => {
+                // Error
                 console.error('Failed to copy text: ', err);
-                // Optionally, provide error feedback to the user
-                if (feedbackElement) {
-                    feedbackElement.textContent = 'Failed!';
-                    feedbackElement.style.color = 'red';
-                    feedbackElement.classList.add('visible');
-                    setTimeout(() => {
-                        feedbackElement.classList.remove('visible');
-                        // Reset text and color
-                        feedbackElement.textContent = 'Copied!';
-                        feedbackElement.style.color = 'green';
-                    }, 2000);
-                }
+                alert('Failed to copy text. Please try again or copy manually.');
             });
         }
     });
