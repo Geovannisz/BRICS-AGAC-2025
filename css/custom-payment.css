@@ -1,4 +1,67 @@
-.payment-card .details li {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+/* Custom styles for payment information cards */
+.payment-card .details {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.payment-card .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.payment-card .detail-item:last-child {
+    border-bottom: none;
+}
+
+.payment-card .detail-label {
+    font-weight: bold;
+    margin-right: 10px;
+    white-space: nowrap;
+    color: #333;
+}
+
+.payment-card .detail-value {
+    text-align: right;
+    color: #555;
+    word-break: break-all; /* More aggressive word breaking for long strings */
+    display: flex;
+    align-items: center;
+}
+
+.payment-card .copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+    color: #007bff;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.payment-card .copy-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.payment-card .copy-btn .fa-copy {
+    pointer-events: none; /* Make sure the icon doesn't capture click events */
+}
+
+.payment-card .copy-feedback {
+    font-size: 0.8em;
+    color: green;
+    margin-left: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s;
+}
+
+.payment-card .copy-feedback.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s;
 }

@@ -241,12 +241,12 @@
                                     <i class="fas fa-university icon"></i>
                                     <h3 class="title" data-lang-en="Bank Transfer (Brazil)" data-lang-pt="Transferência Bancária (Brasil)">Bank Transfer (Brazil)</h3>
                                 </div>
-                                <ul class="details">
-                                    <li><strong data-lang-en="Bank:" data-lang-pt="Banco:">Bank:</strong> 0260 - Nu Pagamentos S.A.</li>
-                                    <li><strong data-lang-en="Agency:" data-lang-pt="Agência:">Agency:</strong> 0001</li>
-                                    <li><strong data-lang-en="Account:" data-lang-pt="Conta:">Account:</strong> 938419477-2</li>
-                                    <li><strong data-lang-en="Name:" data-lang-pt="Nome:">Name:</strong> Paulo J. F. Porfirio</li>
-                                </ul>
+                                <div class="details">
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Bank:" data-lang-pt="Banco:">Bank:</span> <span class="detail-value">0260 - Nu Pagamentos S.A.</span></div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Agency:" data-lang-pt="Agência:">Agency:</span> <span class="detail-value">0001</span></div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Account:" data-lang-pt="Conta:">Account:</span> <span class="detail-value">938419477-2</span></div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Name:" data-lang-pt="Nome:">Name:</span> <span class="detail-value">Paulo J. F. Porfirio</span></div>
+                                </div>
                                 <p class="note" data-lang-en="This is a payment account. If a CPF/CNPJ (Brazilian tax ID) is requested, you may proceed without entering it." data-lang-pt="Esta é uma conta de pagamento. Se um CPF/CNPJ for solicitado, você pode prosseguir sem inseri-lo.">This is a payment account. If a CPF/CNPJ (Brazilian tax ID) is requested, you may proceed without entering it.</p>
                             </div>
                         </div>
@@ -257,10 +257,22 @@
                                     <i class="fas fa-qrcode icon"></i>
                                     <h3 class="title">PIX <small class="text-muted fs-6" data-lang-en="(Brazil Only)" data-lang-pt="(Apenas Brasil)">(Brazil Only)</small></h3>
                                 </div>
-                                <ul class="details">
-                                    <li><strong data-lang-en="Key Type:" data-lang-pt="Tipo de Chave:">Key Type:</strong> <span data-lang-en="E-mail" data-lang-pt="E-mail">E-mail</span></li>
-                                    <li><strong data-lang-en="PIX Key:" data-lang-pt="Chave PIX:">PIX Key:</strong> pporfirio89@gmail.com</li>
-                                </ul>
+                                <div class="details">
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="Key Type:" data-lang-pt="Tipo de Chave:">Key Type:</span>
+                                        <span class="detail-value" data-lang-en="E-mail" data-lang-pt="E-mail">E-mail</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="PIX Key:" data-lang-pt="Chave PIX:">PIX Key:</span>
+                                        <span class="detail-value">
+                                            pporfirio89@gmail.com
+                                            <button type="button" class="copy-btn" data-copy-value="pporfirio89@gmail.com" title="Copy PIX Key">
+                                                <i class="fas fa-copy"></i>
+                                                <span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- International USD -->
@@ -270,14 +282,23 @@
                                     <i class="fas fa-dollar-sign icon"></i>
                                     <h3 class="title" data-lang-en="International Transfer (USD)" data-lang-pt="Transferência Internacional (USD)">International Transfer (USD)</h3>
                                 </div>
-                                <ul class="details">
-                                    <li><strong data-lang-en="Beneficiary Name:" data-lang-pt="Nome do Beneficiário:">Beneficiary Name:</strong> Paulo José Porfírio da Silva</li>
-                                    <li><strong data-lang-en="Account Number:" data-lang-pt="Número da Conta:">Account Number:</strong> 238572605963507</li>
-                                    <li><strong data-lang-en="Account Type:" data-lang-pt="Tipo de Conta:">Account Type:</strong> Deposit</li>
-                                    <li><strong data-lang-en="Routing Number (ACH/Wire):" data-lang-pt="Routing Number (ACH/Wire):">Routing Number (ACH/Wire):</strong> 084009519</li>
-                                    <li><strong data-lang-en="SWIFT/BIC:" data-lang-pt="SWIFT/BIC:">SWIFT/BIC:</strong> TRWIUS35XXX</li>
-                                    <li><strong data-lang-en="Beneficiary Address:" data-lang-pt="Endereço do Beneficiário:">Beneficiary Address:</strong> Wise US Inc, 108 W 13th St, Wilmington, DE, 19801, United States</li>
-                                </ul>
+                                <div class="details">
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Beneficiary Name:" data-lang-pt="Nome do Beneficiário:">Beneficiary Name:</span> <span class="detail-value">Paulo José Porfírio da Silva</span></div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="Account Number:" data-lang-pt="Número da Conta:">Account Number:</span>
+                                        <span class="detail-value">238572605963507<button type="button" class="copy-btn" data-copy-value="238572605963507" title="Copy Account Number"><i class="fas fa-copy"></i><span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span></button></span>
+                                    </div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Account Type:" data-lang-pt="Tipo de Conta:">Account Type:</span> <span class="detail-value">Deposit</span></div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="Routing Number (ACH/Wire):" data-lang-pt="Routing Number (ACH/Wire):">Routing Number:</span>
+                                        <span class="detail-value">084009519<button type="button" class="copy-btn" data-copy-value="084009519" title="Copy Routing Number"><i class="fas fa-copy"></i><span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span></button></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="SWIFT/BIC:" data-lang-pt="SWIFT/BIC:">SWIFT/BIC:</span>
+                                        <span class="detail-value">TRWIUS35XXX<button type="button" class="copy-btn" data-copy-value="TRWIUS35XXX" title="Copy SWIFT/BIC"><i class="fas fa-copy"></i><span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span></button></span>
+                                    </div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Beneficiary Address:" data-lang-pt="Endereço do Beneficiário:">Beneficiary Address:</span> <span class="detail-value">Wise US Inc, 108 W 13th St, Wilmington, DE, 19801, United States</span></div>
+                                </div>
                                 <p class="note" data-lang-en="Use for domestic transfers within the US or international SWIFT transfers." data-lang-pt="Use para transferências domésticas nos EUA ou transferências SWIFT internacionais.">Use for domestic transfers within the US or international SWIFT transfers.</p>
                             </div>
                         </div>
@@ -288,12 +309,18 @@
                                     <i class="fas fa-yen-sign icon"></i>
                                     <h3 class="title" data-lang-en="International Transfer (CNY)" data-lang-pt="Transferência Internacional (CNY)">International Transfer (CNY)</h3>
                                 </div>
-                                <ul class="details">
-                                    <li><strong data-lang-en="Beneficiary Name:" data-lang-pt="Nome do Beneficiário:">Beneficiary Name:</strong> Paulo José Porfírio da Silva</li>
-                                    <li><strong data-lang-en="IBAN:" data-lang-pt="IBAN:">IBAN:</strong> GB95 TRWI 6084 6415 8466 01</li>
-                                    <li><strong data-lang-en="SWIFT/BIC:" data-lang-pt="SWIFT/BIC:">SWIFT/BIC:</strong> TRWIGB2LXXX</li>
-                                    <li><strong data-lang-en="Bank Name and Address:" data-lang-pt="Nome e Endereço do Banco:">Bank Name and Address:</strong> Wise Payments Limited, Worship Square, 65 Clifton Street, London, EC2A 4JE, United Kingdom</li>
-                                </ul>
+                                <div class="details">
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Beneficiary Name:" data-lang-pt="Nome do Beneficiário:">Beneficiary Name:</span> <span class="detail-value">Paulo José Porfírio da Silva</span></div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="IBAN:" data-lang-pt="IBAN:">IBAN:</span>
+                                        <span class="detail-value">GB95TRWI60846415846601<button type="button" class="copy-btn" data-copy-value="GB95TRWI60846415846601" title="Copy IBAN"><i class="fas fa-copy"></i><span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span></button></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label" data-lang-en="SWIFT/BIC:" data-lang-pt="SWIFT/BIC:">SWIFT/BIC:</span>
+                                        <span class="detail-value">TRWIGB2LXXX<button type="button" class="copy-btn" data-copy-value="TRWIGB2LXXX" title="Copy SWIFT/BIC"><i class="fas fa-copy"></i><span class="copy-feedback" data-lang-en="Copied!" data-lang-pt="Copiado!">Copied!</span></button></span>
+                                    </div>
+                                    <div class="detail-item"><span class="detail-label" data-lang-en="Bank Name and Address:" data-lang-pt="Nome e Endereço do Banco:">Bank Name & Address:</span> <span class="detail-value">Wise Payments Limited, Worship Square, 65 Clifton Street, London, EC2A 4JE, United Kingdom</span></div>
+                                </div>
                                 <p class="note" data-lang-en="Use for SWIFT transfers." data-lang-pt="Use para transferências SWIFT.">Use for SWIFT transfers.</p>
                             </div>
                         </div>

@@ -81,4 +81,37 @@ document.addEventListener('DOMContentLoaded', function() {
     //         });
     //     });
     // });
+
+    // --- Copy to Clipboard Functionality ---
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('copy-btn')) {
+            const valueToCopy = e.target.getAttribute('data-copy-value');
+            const feedbackElement = e.target.querySelector('.copy-feedback');
+
+            navigator.clipboard.writeText(valueToCopy).then(() => {
+                // Show feedback
+                if (feedbackElement) {
+                    feedbackElement.classList.add('visible');
+                    // Hide feedback after 2 seconds
+                    setTimeout(() => {
+                        feedbackElement.classList.remove('visible');
+                    }, 2000);
+                }
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                // Optionally, provide error feedback to the user
+                if (feedbackElement) {
+                    feedbackElement.textContent = 'Failed!';
+                    feedbackElement.style.color = 'red';
+                    feedbackElement.classList.add('visible');
+                    setTimeout(() => {
+                        feedbackElement.classList.remove('visible');
+                        // Reset text and color
+                        feedbackElement.textContent = 'Copied!';
+                        feedbackElement.style.color = 'green';
+                    }, 2000);
+                }
+            });
+        }
+    });
 });
