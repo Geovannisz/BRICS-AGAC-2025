@@ -83,40 +83,67 @@ document.addEventListener('DOMContentLoaded', function() {
     // });
 
     // --- Copy to Clipboard Functionality ---
+    function copyToClipboard(text, button) {
+        const copyIcon = button.querySelector('.fa-copy');
+        const checkIcon = button.querySelector('.fa-check');
+
+        const showSuccess = () => {
+            if (copyIcon && checkIcon) {
+                copyIcon.style.display = 'none';
+                checkIcon.style.display = 'inline-block';
+                setTimeout(() => {
+                    copyIcon.style.display = 'inline-block';
+                    checkIcon.style.display = 'none';
+                }, 3000);
+            }
+        };
+
+        // Modern method: Clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(err => {
+                console.error('Modern copy failed: ', err);
+                fallbackCopy(text, showSuccess); // Try fallback if modern method fails
+            });
+        } else {
+            // Fallback for older browsers or insecure contexts
+            fallbackCopy(text, showSuccess);
+        }
+    }
+
+    function fallbackCopy(text, successCallback) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+
+        // Make the textarea invisible
+        textArea.style.position = 'fixed';
+        textArea.style.top = '-9999px';
+        textArea.style.left = '-9999px';
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                successCallback();
+            } else {
+                throw new Error('Fallback copy command failed');
+            }
+        } catch (err) {
+            console.error('Fallback copy failed: ', err);
+            alert('Could not copy text. Please copy it manually.');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
     document.body.addEventListener('click', function(e) {
-        // We check the closest button in case the user clicks the icon inside the button
         const copyButton = e.target.closest('.copy-btn');
         if (copyButton) {
-            // Prevent form submission if the button is inside a form
             e.preventDefault();
-
             const valueToCopy = copyButton.getAttribute('data-copy-value');
-            const copyIcon = copyButton.querySelector('.fa-copy');
-            const checkIcon = copyButton.querySelector('.fa-check');
-
-            // Check if clipboard API is available
-            if (!navigator.clipboard) {
-                alert('Clipboard API not available. Please copy the text manually. This may be due to an insecure (non-HTTPS) connection.');
-                return;
-            }
-
-            navigator.clipboard.writeText(valueToCopy).then(() => {
-                // Success: show checkmark
-                if (copyIcon && checkIcon) {
-                    copyIcon.style.display = 'none';
-                    checkIcon.style.display = 'inline-block';
-
-                    // Revert back to copy icon after 3 seconds
-                    setTimeout(() => {
-                        copyIcon.style.display = 'inline-block';
-                        checkIcon.style.display = 'none';
-                    }, 3000);
-                }
-            }).catch(err => {
-                // Error
-                console.error('Failed to copy text: ', err);
-                alert('Failed to copy text. Please try again or copy manually.');
-            });
+            copyToClipboard(valueToCopy, copyButton);
         }
     });
 });
