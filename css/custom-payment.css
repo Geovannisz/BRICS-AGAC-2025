@@ -27,9 +27,14 @@
 .payment-card .detail-value {
     text-align: right;
     color: #555;
-    word-break: break-all; /* More aggressive word breaking for long strings */
+    overflow-wrap: break-word; /* Allows breaking long text only at appropriate points (e.g., spaces) */
     display: flex;
     align-items: center;
+}
+
+/* Utility class to prevent wrapping on critical data like account numbers */
+.payment-card .detail-value.no-wrap {
+    white-space: nowrap;
 }
 
 .payment-card .copy-btn {
