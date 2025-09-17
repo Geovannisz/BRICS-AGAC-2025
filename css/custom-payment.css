@@ -1,0 +1,69 @@
+/* Custom styles for payment information cards */
+.payment-card .details {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.payment-card .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.payment-card .detail-item:last-child {
+    border-bottom: none;
+}
+
+.payment-card .detail-label {
+    font-weight: bold;
+    margin-right: 10px;
+    white-space: nowrap;
+    color: #333;
+}
+
+.payment-card .detail-value {
+    text-align: right;
+    color: #555;
+    overflow-wrap: break-word; /* Allows breaking long text only at appropriate points (e.g., spaces) */
+    display: flex;
+    align-items: center;
+}
+
+/* Utility class to prevent wrapping on critical data like account numbers */
+.payment-card .detail-value.no-wrap {
+    white-space: nowrap;
+}
+
+.payment-card .copy-btn {
+    background-color: #e9ecef;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #495057;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%; /* Makes the button circular */
+    transition: background-color 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-card .copy-btn:hover {
+    background-color: #ced4da;
+}
+
+.payment-card .copy-btn:active {
+    background-color: #adb5bd;
+}
+
+.payment-card .copy-btn .check-icon {
+    display: none; /* Hidden by default */
+    color: green;
+    font-size: 1.1em;
+}

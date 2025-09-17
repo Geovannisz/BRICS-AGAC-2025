@@ -81,4 +81,70 @@ document.addEventListener('DOMContentLoaded', function() {
     //         });
     //     });
     // });
+
+    // --- Copy to Clipboard Functionality ---
+    function copyToClipboard(text, button) {
+        const copyIcon = button.querySelector('.fa-copy');
+        const checkIcon = button.querySelector('.fa-check');
+
+        const showSuccess = () => {
+            if (copyIcon && checkIcon) {
+                copyIcon.style.display = 'none';
+                checkIcon.style.display = 'inline-block';
+                setTimeout(() => {
+                    copyIcon.style.display = 'inline-block';
+                    checkIcon.style.display = 'none';
+                }, 3000);
+            }
+        };
+
+        // Modern method: Clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(showSuccess).catch(err => {
+                console.error('Modern copy failed, trying fallback: ', err);
+                fallbackCopy(text, showSuccess); // Try fallback if modern method fails
+            });
+        } else {
+            // Fallback for older browsers or insecure contexts
+            console.log('Using fallback copy method.');
+            fallbackCopy(text, showSuccess);
+        }
+    }
+
+    function fallbackCopy(text, successCallback) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+
+        // Make the textarea invisible
+        textArea.style.position = 'fixed';
+        textArea.style.top = '-9999px';
+        textArea.style.left = '-9999px';
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                successCallback();
+            } else {
+                throw new Error('Fallback copy command failed');
+            }
+        } catch (err) {
+            console.error('Fallback copy failed: ', err);
+            alert('Could not copy text. Please copy it manually.');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const valueToCopy = this.getAttribute('data-copy-value');
+            copyToClipboard(valueToCopy, this);
+        });
+    });
 });
