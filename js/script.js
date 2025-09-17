@@ -81,4 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
     //         });
     //     });
     // });
+
+    // --- Copy to Clipboard Functionality (DEBUGGING) ---
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Button clicked!');
+        });
+    });
 });
