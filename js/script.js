@@ -95,6 +95,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Registration Counter ---
     updateRegistrationCount();
+
+    // --- Scroll Animation ---
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Stop observing once visible
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    const elementsToAnimate = document.querySelectorAll('.fade-in-on-scroll');
+    elementsToAnimate.forEach(element => {
+        scrollObserver.observe(element);
+    });
+
+
+    // --- Button Mouse-aware Spotlight Effect ---
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('mousemove', e => {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            button.style.setProperty('--mouse-x', `${x}px`);
+            button.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 });
 
 /**
