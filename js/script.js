@@ -37,6 +37,7 @@ function setLanguage(lang) {
 
     // Save preference to localStorage
     localStorage.setItem('brics-agac-lang', lang);
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -63,9 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentPath = window.location.pathname.split("/").pop() || "index.html";
 
     navLinks.forEach(link => {
-        // Avoid adding 'active' to language switchers
-        if (!link.classList.contains('lang-switcher')) {
-            const linkPath = link.getAttribute('href').split("/").pop();
+        const href = link.getAttribute('href');
+        // Avoid adding 'active' to language switchers and ensure href exists
+        if (href && !link.classList.contains('lang-switcher')) {
+            const linkPath = href.split("/").pop();
             if (linkPath === currentPath) {
                 link.classList.add('active');
             }
@@ -90,4 +92,40 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Button clicked!');
         });
     });
+
+    // --- Registration Counter ---
+    updateRegistrationCount();
 });
+
+/**
+ * Fetches the number of registered participants from a Google Sheet and updates the counter on the page.
+ */
+async function updateRegistrationCount() {
+    const sheetId = '1lBkYPPzjLCO8j5QQ-98Kh5vxv0I3BXpBQCqCNvWXjTg';
+    const sheetName = 'Respostas ao formulário 1';
+    const apiKey = 'AIzaSyBqMlX9Cow_zPPyq880WGh18cl0XRTsppI';
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}?key=${apiKey}`;
+
+    const registrationCountSpan = document.getElementById('registration-count');
+    if (!registrationCountSpan) {
+        console.log('Registration count element not found on this page.');
+        return;
+    }
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Google Sheets API error: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // The first row is the header, so we subtract it from the count.
+        const registrationCount = data.values ? data.values.length - 1 : 0;
+
+        registrationCountSpan.textContent = registrationCount;
+
+    } catch (error) {
+        console.error('Error fetching registration data:', error);
+        registrationCountSpan.textContent = '??'; // Display error indicator
+    }
+}
