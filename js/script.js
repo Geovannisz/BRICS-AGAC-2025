@@ -113,16 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollObserver.observe(element);
     });
 
-    // --- Hero Banner Parallax ---
-    const heroBanner = document.querySelector('.hero-banner');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    if (heroBanner && !prefersReducedMotion.matches) {
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.pageYOffset;
-            heroBanner.style.backgroundPositionY = `${scrollPosition * 0.4}px`;
-        });
-    }
 
     // --- Button Mouse-aware Spotlight Effect ---
     const buttons = document.querySelectorAll('.btn');
