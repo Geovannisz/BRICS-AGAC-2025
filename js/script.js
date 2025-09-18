@@ -37,6 +37,7 @@ function setLanguage(lang) {
 
     // Save preference to localStorage
     localStorage.setItem('brics-agac-lang', lang);
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
