@@ -95,6 +95,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Registration Counter ---
     updateRegistrationCount();
+
+    // --- Scroll Animation ---
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Stop observing once visible
+            }
+        });
+    }, {
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    const elementsToAnimate = document.querySelectorAll('.fade-in-on-scroll');
+    elementsToAnimate.forEach(element => {
+        scrollObserver.observe(element);
+    });
+
+    // --- Hero Banner Parallax ---
+    const heroBanner = document.querySelector('.hero-banner');
+    if (heroBanner) {
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            heroBanner.style.backgroundPositionY = `${scrollPosition * 0.4}px`;
+        });
+    }
 });
 
 /**
