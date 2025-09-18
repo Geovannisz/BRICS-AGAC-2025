@@ -123,6 +123,18 @@ document.addEventListener('DOMContentLoaded', function() {
             heroBanner.style.backgroundPositionY = `${scrollPosition * 0.4}px`;
         });
     }
+
+    // --- Button Mouse-aware Spotlight Effect ---
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('mousemove', e => {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            button.style.setProperty('--mouse-x', `${x}px`);
+            button.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 });
 
 /**
