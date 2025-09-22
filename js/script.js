@@ -41,6 +41,10 @@ function setLanguage(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // --- Page Load Animation Trigger ---
+    // Add 'page-loaded' class to body to trigger CSS transition
+    document.body.classList.add('page-loaded');
+
     console.log("BRICS-AGAC 2025 Website Loaded");
 
     // --- Language Switcher Logic ---

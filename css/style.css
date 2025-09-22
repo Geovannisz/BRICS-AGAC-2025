@@ -1,5 +1,4 @@
 /* css/style.css */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 :root {
     --primary-color: #0A2342; /* Deep Navy Blue */
@@ -60,6 +59,18 @@ h5 {
 h6 {
     font-size: 1rem; /* approx 16px */
     font-weight: 600;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-color);
 }
 
 .navbar-brand {
@@ -279,9 +290,9 @@ h6 {
 
 /* General Card Styling - Overriding Bootstrap's .card */
 .card {
-    border: none; /* Remove default border */
+    border: 1px solid transparent; /* Start with a transparent border */
     box-shadow: 0 4px 8px rgba(0,0,0,0.08); /* Softer, slightly more pronounced default shadow */
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.3s ease-in-out;
     border-radius: 0.5rem; /* Ensure consistent border-radius, BS default is 0.375rem */
     overflow: hidden; /* Important for containing the zooming image */
 }
@@ -289,6 +300,7 @@ h6 {
 .card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12); /* More pronounced, diffuse hover shadow */
+    border-color: var(--accent-color); /* Add accent border on hover */
 }
 
 .card .card-img-top {
@@ -496,6 +508,14 @@ h6 {
 }
 
 /* Page Section Headers for Speaker Categories */
+.lead {
+    font-size: 1.2rem;
+    font-weight: 300;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .page-section-header {
     /* text-align: center; is expected on the h2 element in HTML */
     padding-bottom: 0.75rem;
@@ -710,6 +730,18 @@ h6 {
 }
 
 .fade-in-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Page Load Animation --- */
+.page-content-wrapper {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.page-loaded .page-content-wrapper {
     opacity: 1;
     transform: translateY(0);
 }
