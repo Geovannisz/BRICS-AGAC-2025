@@ -88,12 +88,41 @@ document.addEventListener('DOMContentLoaded', function() {
     //     });
     // });
 
-    // --- Copy to Clipboard Functionality (DEBUGGING) ---
+    // --- Copy to Clipboard Functionality ---
     const copyButtons = document.querySelectorAll('.copy-btn');
     copyButtons.forEach(button => {
+        const copyIcon = button.querySelector('.fa-copy');
+        const checkIcon = button.querySelector('.fa-check');
+
+        // Hide check icon by default if it's not already handled by CSS
+        if (checkIcon) {
+            checkIcon.style.display = 'none';
+        }
+
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Button clicked!');
+            const valueToCopy = this.dataset.copyValue;
+
+            if (!valueToCopy || !navigator.clipboard) {
+                console.error('Clipboard API not available or no value to copy.');
+                return;
+            }
+
+            navigator.clipboard.writeText(valueToCopy).then(() => {
+                // Success feedback
+                if (copyIcon) copyIcon.style.display = 'none';
+                if (checkIcon) checkIcon.style.display = 'inline-block';
+
+                // Revert icon after a few seconds
+                setTimeout(() => {
+                    if (copyIcon) copyIcon.style.display = 'inline-block';
+                    if (checkIcon) checkIcon.style.display = 'none';
+                }, 2000);
+
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                // Optional: show an error tooltip or message
+            });
         });
     });
 
