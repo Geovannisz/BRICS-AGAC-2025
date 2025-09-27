@@ -55,20 +55,27 @@
         Home
        </a>
       </li>
-      <li class="nav-item">
-       <a class="nav-link" data-lang-en="Committees" data-lang-pt="Comit&ecirc;s" href="/committees/">
-        Committees
+      <li class="nav-item dropdown">
+       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-lang-en="Event Info" data-lang-pt="Informa&ccedil;&otilde;es do Evento" href="#" id="navbarDropdownEventInfo" role="button">
+        Event Info
        </a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" data-lang-en="Speakers" data-lang-pt="Palestrantes" href="/speakers/">
-        Speakers
-       </a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" data-lang-en="Programme" data-lang-pt="Programa&ccedil;&atilde;o" href="/programme/">
-        Programme
-       </a>
+       <ul aria-labelledby="navbarDropdownEventInfo" class="dropdown-menu">
+        <li>
+         <a class="dropdown-item" data-lang-en="Committees" data-lang-pt="Comit&ecirc;s" href="/committees/">
+          Committees
+         </a>
+        </li>
+        <li>
+         <a class="dropdown-item" data-lang-en="Speakers" data-lang-pt="Palestrantes" href="/speakers/">
+          Speakers
+         </a>
+        </li>
+        <li>
+         <a class="dropdown-item" data-lang-en="Programme" data-lang-pt="Programa&ccedil;&atilde;o" href="/programme/">
+          Programme
+         </a>
+        </li>
+       </ul>
       </li>
       <li class="nav-item">
        <a class="nav-link" data-lang-en="Shirts" data-lang-pt="Camisetas" href="/shirts/">
@@ -91,7 +98,7 @@
        </a>
       </li>
       <li class="nav-item dropdown">
-       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-lang-en="Local Info" data-lang-pt="Informa&ccedil;&otilde;es Locais" href="#" id="navbarDropdownLocalInfo" role="button">
+       <a aria-expanded="false" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" data-lang-en="Local Info" data-lang-pt="Informa&ccedil;&otilde;es Locais" href="#" id="navbarDropdownLocalInfo" role="button">
         Local Info
        </a>
        <ul aria-labelledby="navbarDropdownLocalInfo" class="dropdown-menu">
@@ -101,7 +108,7 @@
          </a>
         </li>
         <li>
-         <a class="dropdown-item" data-lang-en="Accommodation" data-lang-pt="Hospedagem" href="/accommodation/">
+         <a class="dropdown-item active" data-lang-en="Accommodation" data-lang-pt="Hospedagem" href="/accommodation/">
           Accommodation
          </a>
         </li>
