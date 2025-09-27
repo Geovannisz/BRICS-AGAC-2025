@@ -123,8 +123,10 @@ a:hover {
     color: rgba(255, 255, 255, 0.85);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 0.87rem;
     position: relative;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
     padding-bottom: 0.3rem;
     transition: color 0.3s ease-out;
 }
