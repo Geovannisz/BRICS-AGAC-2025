@@ -161,10 +161,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Fetches the number of registered participants by calling a secure serverless function.
+ * Fetches the number of registered participants from the public Google Sheet CSV.
  */
 async function updateRegistrationCount() {
-    const url = '/api/get-registration-count'; // Use the secure serverless function
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDhHAo69dtSs8Snd2wPwlw70K3k9Hvg2Z9nMAG-s3L8bjAjpamz1aUdDdMinSOgS0r9E264eVWrkz7/pub?gid=899626177&single=true&output=csv';
     const registrationCountSpan = document.getElementById('registration-count');
 
     if (!registrationCountSpan) {
@@ -175,10 +175,16 @@ async function updateRegistrationCount() {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
+            throw new Error(`CSV fetch error: ${response.status}`);
         }
-        const data = await response.json();
-        registrationCountSpan.textContent = data.count;
+        const csvText = await response.text();
+
+        // Count the number of lines in the CSV. Subtract 1 for the header row.
+        // Handles cases where the sheet is empty or has only a header.
+        const lineCount = csvText.trim() === '' ? 0 : csvText.trim().split('\n').length;
+        const registrationCount = lineCount > 1 ? lineCount - 1 : 0;
+
+        registrationCountSpan.textContent = registrationCount;
 
     } catch (error) {
         console.error('Error fetching registration data:', error);

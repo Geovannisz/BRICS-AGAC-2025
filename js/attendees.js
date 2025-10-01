@@ -4,8 +4,26 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchAttendeeData();
 });
 
+// Function to parse CSV text into an array of objects
+function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.trim());
+    const rows = lines.slice(1).map(line => {
+        // This is a simple CSV parser. It won't handle complex cases like commas within quotes.
+        // For this specific data, it should be sufficient.
+        const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, '')); // Remove surrounding quotes
+        const obj = {};
+        headers.forEach((header, i) => {
+            obj[header] = values[i];
+        });
+        return obj;
+    });
+    return rows;
+}
+
+
 async function fetchAttendeeData() {
-    const url = '/api/get-attendees'; // Use the secure serverless function
+    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDhHAo69dtSs8Snd2wPwlw70K3k9Hvg2Z9nMAG-s3L8bjAjpamz1aUdDdMinSOgS0r9E264eVWrkz7/pub?gid=899626177&single=true&output=csv';
     const tbody = document.getElementById('attendees-tbody');
 
     if (!tbody) {
@@ -16,13 +34,20 @@ async function fetchAttendeeData() {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`API error: ${response.status}`);
+            throw new Error(`CSV fetch error: ${response.status}`);
         }
-        const attendees = await response.json();
+        const csvText = await response.text();
+        const attendees = parseCSV(csvText).map(row => ({
+            // Map CSV headers to the properties we expect
+            timestamp: row['Timestamp'] || '',
+            name: row['Full Name'] || '',
+            institution: row['University/Institution'] || '',
+            occupation: row['Student Status/Degree or Occupation'] || ''
+        }));
 
         populateTable(attendees);
         setupSearch(attendees);
-        setupSorting(); // No change needed here, as it works on the DOM
+        setupSorting();
         createCharts(attendees);
 
     } catch (error) {
@@ -43,10 +68,10 @@ function populateTable(attendees) {
     attendees.forEach(attendee => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${attendee.timestamp || ''}</td>
-            <td>${attendee.name || ''}</td>
-            <td>${attendee.institution || ''}</td>
-            <td>${attendee.occupation || ''}</td>
+            <td>${attendee.timestamp}</td>
+            <td>${attendee.name}</td>
+            <td>${attendee.institution}</td>
+            <td>${attendee.occupation}</td>
         `;
         tbody.appendChild(tr);
     });
@@ -59,7 +84,6 @@ function setupSearch(allAttendees) {
     searchInput.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase();
         const filteredAttendees = allAttendees.filter(attendee => {
-            // Search through the values of the attendee object
             return Object.values(attendee).some(value =>
                 value.toLowerCase().includes(searchTerm)
             );
@@ -95,28 +119,21 @@ function setupSorting() {
     });
 }
 
-
 function createCharts(attendees) {
     if (attendees.length === 0) return;
 
     const lang = localStorage.getItem('brics-agac-lang') || 'en';
 
-    // Destroy existing charts if they exist to prevent canvas reuse issues
-    if (window.institutionsChart) {
-        window.institutionsChart.destroy();
-    }
-    if (window.occupationChart) {
-        window.occupationChart.destroy();
-    }
+    if (window.institutionsChart) window.institutionsChart.destroy();
+    if (window.occupationChart) window.occupationChart.destroy();
 
-    // Chart 1: Top 10 Institutions (Horizontal Bar)
+    // Chart 1: Top 10 Institutions
     const institutionsCanvas = document.getElementById('institutions-chart');
     const institutionsCtx = institutionsCanvas.getContext('2d');
     const institutionsTitle = institutionsCanvas.getAttribute(`data-lang-${lang}-title`);
     const institutionsLabel = institutionsCanvas.getAttribute(`data-lang-${lang}-label`);
 
-    const institutions = attendees.map(attendee => attendee.institution).filter(Boolean);
-    const institutionCounts = institutions.reduce((acc, inst) => {
+    const institutionCounts = attendees.map(a => a.institution).filter(Boolean).reduce((acc, inst) => {
         acc[inst] = (acc[inst] || 0) + 1;
         return acc;
     }, {});
@@ -124,18 +141,15 @@ function createCharts(attendees) {
     const sortedInstitutions = Object.entries(institutionCounts)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 10)
-        .reverse(); // Reverse to show the highest value at the top
-
-    const institutionLabels = sortedInstitutions.map(item => item[0]);
-    const institutionData = sortedInstitutions.map(item => item[1]);
+        .reverse();
 
     window.institutionsChart = new Chart(institutionsCtx, {
         type: 'bar',
         data: {
-            labels: institutionLabels,
+            labels: sortedInstitutions.map(item => item[0]),
             datasets: [{
                 label: institutionsLabel,
-                data: institutionData,
+                data: sortedInstitutions.map(item => item[1]),
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -144,20 +158,8 @@ function createCharts(attendees) {
         options: {
             indexAxis: 'y',
             responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                title: {
-                    display: true,
-                    text: institutionsTitle
-                }
-            },
-            scales: {
-                x: {
-                    beginAtZero: true
-                }
-            }
+            plugins: { legend: { display: false }, title: { display: true, text: institutionsTitle } },
+            scales: { x: { beginAtZero: true } }
         }
     });
 
@@ -166,21 +168,17 @@ function createCharts(attendees) {
     const occupationCtx = occupationCanvas.getContext('2d');
     const occupationTitle = occupationCanvas.getAttribute(`data-lang-${lang}-title`);
 
-    const occupations = attendees.map(attendee => attendee.occupation).filter(Boolean);
-    const occupationCounts = occupations.reduce((acc, occ) => {
+    const occupationCounts = attendees.map(a => a.occupation).filter(Boolean).reduce((acc, occ) => {
         acc[occ] = (acc[occ] || 0) + 1;
         return acc;
     }, {});
 
-    const occupationLabels = Object.keys(occupationCounts);
-    const occupationData = Object.values(occupationCounts);
-
     window.occupationChart = new Chart(occupationCtx, {
         type: 'pie',
         data: {
-            labels: occupationLabels,
+            labels: Object.keys(occupationCounts),
             datasets: [{
-                data: occupationData,
+                data: Object.values(occupationCounts),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)',
@@ -193,12 +191,7 @@ function createCharts(attendees) {
         },
         options: {
             responsive: true,
-            plugins: {
-                title: {
-                    display: true,
-                    text: occupationTitle
-                }
-            }
+            plugins: { title: { display: true, text: occupationTitle } }
         }
     });
 }
