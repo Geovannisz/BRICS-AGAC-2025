@@ -493,6 +493,10 @@ a:hover {
     padding-top: 0.5rem; /* Reduced from 0.75rem */
     border-top: 1px solid var(--neutral-light-color);
     margin-bottom: 0.75rem; /* Space before bio */
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-speaker-enhanced .card-text.small { /* Bio */
