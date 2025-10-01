@@ -4,21 +4,43 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchAttendeeData();
 });
 
-// Function to parse CSV text into an array of objects
+// Function to parse CSV text into an array of objects, handling quoted fields.
 function parseCSV(text) {
-    const lines = text.trim().split('\n');
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length < 2) return []; // Return empty if no header or data
+
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    const rows = lines.slice(1).map(line => {
-        // A simple CSV parser. It won't handle complex cases like commas within quotes.
-        // For this specific data, it should be sufficient.
-        const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+
+    return lines.slice(1).map(line => {
+        if (!line.trim()) return null; // Skip empty lines
+
         const obj = {};
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+
+        // This parser iterates through the line, respecting quotes.
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"' && (line[i-1] === ',' || line[i+1] === ',' || i === 0 || i === line.length - 1)) {
+                 inQuotes = !inQuotes;
+                 continue;
+            }
+
+            if (char === ',' && !inQuotes) {
+                values.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current);
+
         headers.forEach((header, i) => {
-            obj[header] = values[i];
+            obj[header] = (values[i] || '').trim().replace(/^"|"$/g, '');
         });
         return obj;
-    });
-    return rows;
+    }).filter(Boolean); // Filter out nulls from empty lines
 }
 
 
