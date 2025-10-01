@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function updateRegistrationCount() {
     const sheetId = '1lBkYPPzjLCO8j5QQ-98Kh5vxv0I3BXpBQCqCNvWXjTg';
     const sheetName = 'Respostas ao formulário 1';
-    const apiKey = 'AIzaSyBqMlX9Cow_zPPyq880WGh18cl0XRTsppI';
+    const apiKey = 'AIzaSyBeSZxuEe0Jh-TXpWPVZ9elyu0cWWAEdko';
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}?key=${apiKey}`;
 
     const registrationCountSpan = document.getElementById('registration-count');
