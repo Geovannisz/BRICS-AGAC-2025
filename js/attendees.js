@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to parse CSV text into an array of objects
 function parseCSV(text) {
     const lines = text.trim().split('\n');
-    const headers = lines[0].split(',').map(h => h.trim());
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
     const rows = lines.slice(1).map(line => {
-        // This is a simple CSV parser. It won't handle complex cases like commas within quotes.
+        // A simple CSV parser. It won't handle complex cases like commas within quotes.
         // For this specific data, it should be sufficient.
-        const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, '')); // Remove surrounding quotes
+        const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
         const obj = {};
         headers.forEach((header, i) => {
             obj[header] = values[i];
@@ -85,7 +85,7 @@ function setupSearch(allAttendees) {
         const searchTerm = this.value.toLowerCase();
         const filteredAttendees = allAttendees.filter(attendee => {
             return Object.values(attendee).some(value =>
-                value.toLowerCase().includes(searchTerm)
+                value && value.toLowerCase().includes(searchTerm)
             );
         });
         populateTable(filteredAttendees);
