@@ -1,0 +1,9 @@
+{
+  "name": "brics-agac-2025-api",
+  "version": "1.0.0",
+  "description": "Serverless functions for the BRICS-AGAC 2025 website.",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}

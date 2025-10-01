@@ -161,15 +161,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Fetches the number of registered participants from a Google Sheet and updates the counter on the page.
+ * Fetches the number of registered participants by calling a secure serverless function.
  */
 async function updateRegistrationCount() {
-    const sheetId = '1lBkYPPzjLCO8j5QQ-98Kh5vxv0I3BXpBQCqCNvWXjTg';
-    const sheetName = 'Respostas ao formulário 1';
-    const apiKey = 'AIzaSyBeSZxuEe0Jh-TXpWPVZ9elyu0cWWAEdko';
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}?key=${apiKey}`;
-
+    const url = '/api/get-registration-count'; // Use the secure serverless function
     const registrationCountSpan = document.getElementById('registration-count');
+
     if (!registrationCountSpan) {
         console.log('Registration count element not found on this page.');
         return;
@@ -178,14 +175,10 @@ async function updateRegistrationCount() {
     try {
         const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Google Sheets API error: ${response.status}`);
+            throw new Error(`API error: ${response.status}`);
         }
         const data = await response.json();
-
-        // The first row is the header, so we subtract it from the count.
-        const registrationCount = data.values ? data.values.length - 1 : 0;
-
-        registrationCountSpan.textContent = registrationCount;
+        registrationCountSpan.textContent = data.count;
 
     } catch (error) {
         console.error('Error fetching registration data:', error);
