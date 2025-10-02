@@ -161,15 +161,47 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Fetches the number of registered participants from the public Google Sheet CSV.
+ * Fetches the number of unique registered participants and updates the counter on the page.
  */
 async function updateRegistrationCount() {
     const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDhHAo69dtSs8Snd2wPwlw70K3k9Hvg2Z9nMAG-s3L8bjAjpamz1aUdDdMinSOgS0r9E264eVWrkz7/pub?gid=899626177&single=true&output=csv';
     const registrationCountSpan = document.getElementById('registration-count');
 
     if (!registrationCountSpan) {
-        console.log('Registration count element not found on this page.');
+        // This is expected on pages without the counter, so we don't log an error.
         return;
+    }
+
+    // A robust CSV parser to be used locally within this function.
+    function parseCSV(text) {
+        const lines = text.trim().split(/\r?\n/);
+        if (lines.length < 2) return [];
+        const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+        return lines.slice(1).map(line => {
+            if (!line.trim()) return null;
+            const obj = {};
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"' && (i === 0 || line[i-1] === ',' || line[i+1] === ',' || i === line.length - 1)) {
+                    inQuotes = !inQuotes;
+                    continue;
+                }
+                if (char === ',' && !inQuotes) {
+                    values.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            values.push(current);
+            headers.forEach((header, i) => {
+                obj[header] = (values[i] || '').trim().replace(/^"|"$/g, '');
+            });
+            return obj;
+        }).filter(Boolean);
     }
 
     try {
@@ -178,13 +210,35 @@ async function updateRegistrationCount() {
             throw new Error(`CSV fetch error: ${response.status}`);
         }
         const csvText = await response.text();
+        const allAttendees = parseCSV(csvText).map(row => ({
+            timestamp: row['Carimbo de data/hora'] || '',
+            name: row['Name'] || ''
+        }));
 
-        // Count the number of lines in the CSV. Subtract 1 for the header row.
-        // Handles cases where the sheet is empty or has only a header.
-        const lineCount = csvText.trim() === '' ? 0 : csvText.trim().split('\n').length;
-        const registrationCount = lineCount > 1 ? lineCount - 1 : 0;
+        // De-duplicate attendees, keeping the latest entry for each name
+        const uniqueAttendeesMap = new Map();
+        allAttendees.forEach(attendee => {
+            const nameKey = attendee.name.trim().toLowerCase();
+            if (!nameKey) return;
 
-        registrationCountSpan.textContent = registrationCount;
+            const existing = uniqueAttendeesMap.get(nameKey);
+            if (!existing) {
+                uniqueAttendeesMap.set(nameKey, attendee);
+            } else {
+                 const parseDate = (dateStr) => {
+                    if (!dateStr || !dateStr.includes(' ')) return new Date(0);
+                    const [datePart, timePart] = dateStr.split(' ');
+                    const [day, month, year] = datePart.split('/');
+                    if (!year || !month || !day) return new Date(0);
+                    return new Date(`${year}-${month}-${day}T${timePart}`);
+                };
+                if (parseDate(attendee.timestamp) > parseDate(existing.timestamp)) {
+                    uniqueAttendeesMap.set(nameKey, attendee);
+                }
+            }
+        });
+
+        registrationCountSpan.textContent = uniqueAttendeesMap.size;
 
     } catch (error) {
         console.error('Error fetching registration data:', error);

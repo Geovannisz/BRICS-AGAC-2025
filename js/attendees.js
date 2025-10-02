@@ -59,17 +59,42 @@ async function fetchAttendeeData() {
             throw new Error(`CSV fetch error: ${response.status}`);
         }
         const csvText = await response.text();
-        const attendees = parseCSV(csvText).map(row => ({
+        const allAttendees = parseCSV(csvText).map(row => ({
             timestamp: row['Carimbo de data/hora'] || '',
             name: row['Name'] || '',
             institution: row['University or Institution'] || '',
             occupation: row['Choose your degree or occupation:'] || ''
         }));
 
-        populateTable(attendees);
-        setupSearch(attendees);
+        // De-duplicate attendees, keeping the latest entry for each name
+        const uniqueAttendeesMap = new Map();
+        allAttendees.forEach(attendee => {
+            const nameKey = attendee.name.trim().toLowerCase();
+            if (!nameKey) return; // Skip entries with no name
+
+            const existing = uniqueAttendeesMap.get(nameKey);
+            if (!existing) {
+                uniqueAttendeesMap.set(nameKey, attendee);
+            } else {
+                const parseDate = (dateStr) => {
+                    if (!dateStr || !dateStr.includes(' ')) return new Date(0);
+                    const [datePart, timePart] = dateStr.split(' ');
+                    const [day, month, year] = datePart.split('/');
+                    if (!year || !month || !day) return new Date(0);
+                    return new Date(`${year}-${month}-${day}T${timePart}`);
+                };
+
+                if (parseDate(attendee.timestamp) > parseDate(existing.timestamp)) {
+                    uniqueAttendeesMap.set(nameKey, attendee);
+                }
+            }
+        });
+        const uniqueAttendees = Array.from(uniqueAttendeesMap.values());
+
+        populateTable(uniqueAttendees);
+        setupSearch(uniqueAttendees);
         setupSorting();
-        createCharts(attendees);
+        createCharts(uniqueAttendees);
 
     } catch (error) {
         console.error('Error fetching or processing attendee data:', error);
