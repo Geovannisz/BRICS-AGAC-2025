@@ -97,6 +97,9 @@ function normalizeData(attendee) {
         'UEFS': 'Universidade Estadual de Feira de Santana (UEFS)',
         'UEPB': 'Universidade Estadual da Paraíba (UEPB)',
         'Rural Federal University of Pernambuco': 'Universidade Federal Rural de Pernambuco (UFRPE)',
+        'Associação Paraibana de Astronomia': 'Associação Paraibana de Astronomia (APA)',
+        'ASSOCIAÇÃO PARAIBANA DE ASTRONOMIA (APA)': 'Associação Paraibana de Astronomia (APA)',
+        'Associação Paraibana de Astronomia - APA': 'Associação Paraibana de Astronomia (APA)',
     };
 
     const occupationMap = {
@@ -286,9 +289,13 @@ function createCharts(attendees) {
     const institutionsTitle = institutionsCanvas.getAttribute(`data-lang-${lang}-title`);
     const institutionsLabel = institutionsCanvas.getAttribute(`data-lang-${lang}-label`);
 
-    const institutionCounts = attendees.map(a => a.institution).filter(Boolean).reduce((acc, inst) => {
-        acc[inst] = (acc[inst] || 0) + 1;
-        return acc;
+    const institutionCounts = attendees
+        .map(a => a.institution)
+        .filter(Boolean) // Remove any null/undefined institutions
+        .filter(inst => inst.trim().toLowerCase() !== 'institution') // Filter out generic "Institution"
+        .reduce((acc, inst) => {
+            acc[inst] = (acc[inst] || 0) + 1;
+            return acc;
     }, {});
 
     // Sort ascending by count, then take the last 15 items.
