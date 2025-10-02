@@ -94,7 +94,7 @@ function normalizeData(attendee) {
         'Entusiasta da astronomia': 'Amateur Astronomer',
         'Master': "Master's Student",
         'PhD': 'PhD Student',
-        'Graduated': 'Graduate',
+        'Graduated': 'Student',
     };
 
     // First, map known variations to a standard name.
