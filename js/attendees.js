@@ -291,10 +291,12 @@ function createCharts(attendees) {
         return acc;
     }, {});
 
+    // Sort ascending by count, then take the last 15 items.
+    // This gives the Top 15, with the largest value at the end of the array.
+    // For a horizontal bar chart, the last item is at the top.
     const sortedInstitutions = Object.entries(institutionCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 15)
-        .reverse(); // Reverse to show the highest value at the top of a horizontal bar chart
+        .sort((a, b) => a[1] - b[1])
+        .slice(-15);
 
     window.institutionsChart = new Chart(institutionsCtx, {
         type: 'bar',
