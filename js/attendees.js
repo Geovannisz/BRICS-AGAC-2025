@@ -60,10 +60,10 @@ async function fetchAttendeeData() {
         }
         const csvText = await response.text();
         const attendees = parseCSV(csvText).map(row => ({
-            timestamp: row['Timestamp'] || '',
-            name: row['Full Name'] || '',
-            institution: row['University/Institution'] || '',
-            occupation: row['Student Status/Degree or Occupation'] || ''
+            timestamp: row['Carimbo de data/hora'] || '',
+            name: row['Name'] || '',
+            institution: row['University or Institution'] || '',
+            occupation: row['Choose your degree or occupation:'] || ''
         }));
 
         populateTable(attendees);
