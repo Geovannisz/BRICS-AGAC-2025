@@ -44,6 +44,53 @@ function parseCSV(text) {
 }
 
 
+function normalizeData(attendee) {
+    const institutionMap = {
+        'UFPB': 'Universidade Federal da Paraíba (UFPB)',
+        'Universidade Federal da Paraíba': 'Universidade Federal da Paraíba (UFPB)',
+        'universidade federal da paraíba': 'Universidade Federal da Paraíba (UFPB)',
+        'Universidade Federal da Paraíba-UFPB': 'Universidade Federal da Paraíba (UFPB)',
+        'UFCG': 'Universidade Federal de Campina Grande (UFCG)',
+        'Unversidade Federal de Campina Grande': 'Universidade Federal de Campina Grande (UFCG)',
+        'Universidade Federal de Juiz de Fora': 'Universidade Federal de Juiz de Fora (UFJF)',
+        'IF Sudeste MG': 'Instituto Federal do Sudeste de Minas Gerais',
+        'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUDESTE DE MINAS GERAIS - Campus Juiz de Fora': 'Instituto Federal do Sudeste de Minas Gerais',
+        'USP': 'Universidade de São Paulo (USP)',
+        'IAG/USP': 'Universidade de São Paulo (USP)',
+        'Instituto de Física da USP': 'Universidade de São Paulo (USP)',
+        'UEFS': 'Universidade Estadual de Feira de Santana (UEFS)',
+        'UEPB': 'Universidade Estadual da Paraíba (UEPB)',
+        'Rural Federal University of Pernambuco': 'Universidade Federal Rural de Pernambuco (UFRPE)',
+    };
+
+    const occupationMap = {
+        'student (aluno)': 'Student',
+        'Estudante': 'Student',
+        'Estudent': 'Student',
+        'High school student': 'Student',
+        'Undergraduate': 'Student',
+        'Posdoc': 'Postdoc',
+        'junior researcher': 'Researcher',
+        'Astrônoma amadora/ Cientista cidadã': 'Amateur Astronomer',
+        'Astrônomo amador mirim': 'Amateur Astronomer',
+        'Entusiasta da astronomia': 'Amateur Astronomer',
+        'Master': "Master's Student",
+        'PhD': 'PhD Student',
+    };
+
+    const normalizedInstitution = Object.keys(institutionMap).find(key =>
+        attendee.institution.trim().toLowerCase().includes(key.toLowerCase())
+    );
+    const normalizedOccupation = Object.keys(occupationMap).find(key =>
+        attendee.occupation.trim().toLowerCase() === key.toLowerCase()
+    );
+
+    attendee.institution = normalizedInstitution ? institutionMap[normalizedInstitution] : attendee.institution;
+    attendee.occupation = normalizedOccupation ? occupationMap[normalizedOccupation] : attendee.occupation;
+
+    return attendee;
+}
+
 async function fetchAttendeeData() {
     const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSDhHAo69dtSs8Snd2wPwlw70K3k9Hvg2Z9nMAG-s3L8bjAjpamz1aUdDdMinSOgS0r9E264eVWrkz7/pub?gid=899626177&single=true&output=csv';
     const tbody = document.getElementById('attendees-tbody');
@@ -64,7 +111,7 @@ async function fetchAttendeeData() {
             name: row['Name'] || '',
             institution: row['University or Institution'] || '',
             occupation: row['Choose your degree or occupation:'] || ''
-        }));
+        })).map(normalizeData); // Apply normalization here
 
         // De-duplicate attendees, keeping the latest entry for each name
         const uniqueAttendeesMap = new Map();
