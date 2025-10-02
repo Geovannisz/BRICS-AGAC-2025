@@ -1,0 +1,55 @@
+/* css/attendees.css */
+
+#attendees-table {
+    margin-top: 2rem;
+    border: 1px solid #dee2e6;
+}
+
+#attendees-table thead th {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    cursor: pointer;
+    position: relative;
+    padding: 0.9rem 0.75rem;
+    vertical-align: middle;
+}
+
+#attendees-table tbody tr:hover {
+    background-color: var(--neutral-light-color);
+}
+
+#attendees-table td {
+    padding: 0.9rem 0.75rem;
+    vertical-align: middle;
+}
+
+#attendees-table th::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    border: 5px solid transparent;
+}
+
+#attendees-table th.sort-asc::after {
+    border-bottom-color: var(--accent-color);
+}
+
+#attendees-table th.sort-desc::after {
+    border-top-color: var(--accent-color);
+}
+
+#charts-container {
+    padding: 2rem;
+    background-color: var(--light-background-color);
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    margin-bottom: 2rem;
+}
+
+#search-input {
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
