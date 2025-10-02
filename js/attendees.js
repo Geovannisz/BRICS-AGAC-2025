@@ -44,32 +44,40 @@ function parseCSV(text) {
 }
 
 
-// Helper function to convert all-caps strings to Title Case, preserving acronyms.
+// Helper function to convert strings to Title Case, preserving specific acronyms.
 function toTitleCase(str) {
     if (!str) return '';
 
     // List of known acronyms to preserve in uppercase.
     const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE'];
+    // A small list of words to keep in lowercase.
+    const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a'];
 
-    // Check if the string is likely to need title casing (e.g., all caps and not a simple acronym).
-    if (str === str.toUpperCase() && (str.length > 5 || str.includes(' '))) {
-        return str.toLowerCase().split(' ').map(word => {
-            const upperWord = word.toUpperCase();
-            // If the word is a known acronym, return it in uppercase.
-            if (acronyms.includes(upperWord)) {
-                return upperWord;
-            }
-
-            // A small list of words to keep in lowercase.
-            const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a', 'do', 'dos'];
-            if (exceptions.includes(word)) {
-                return word;
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1);
-        }).join(' ');
+    // If the entire string is a known acronym, return it in uppercase.
+    if (acronyms.includes(str.toUpperCase().trim())) {
+        return str.toUpperCase().trim();
     }
-    // Return the original string if it's not all-caps or doesn't need processing.
-    return str;
+
+    return str.toLowerCase().split(' ').map(word => {
+        // Handle parenthesized acronyms like (UFPB)
+        if (word.startsWith('(') && word.endsWith(')')) {
+            const acronym = word.slice(1, -1).toUpperCase();
+            if (acronyms.includes(acronym)) {
+                return `(${acronym})`;
+            }
+        }
+
+        // Handle simple acronyms
+        if (acronyms.includes(word.toUpperCase())) {
+            return word.toUpperCase();
+        }
+
+        if (exceptions.includes(word)) {
+            return word;
+        }
+
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
 }
 
 function normalizeData(attendee) {
@@ -286,7 +294,8 @@ function createCharts(attendees) {
 
     const sortedInstitutions = Object.entries(institutionCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 15);
+        .slice(0, 15)
+        .reverse(); // Reverse to show the highest value at the top of a horizontal bar chart
 
     window.institutionsChart = new Chart(institutionsCtx, {
         type: 'bar',
