@@ -49,7 +49,7 @@ function toTitleCase(str) {
     if (!str) return '';
 
     // List of known acronyms to preserve in uppercase.
-    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE'];
+    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE', 'UNOPAR'];
     // A small list of words to keep in lowercase.
     const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a'];
 
@@ -275,11 +275,13 @@ function createCharts(attendees) {
 
     if (window.institutionsChart) window.institutionsChart.destroy();
     if (window.occupationChart) window.occupationChart.destroy();
+    if (window.registrationsByWeekChart) window.registrationsByWeekChart.destroy();
 
     const institutionsCanvas = document.getElementById('institutions-chart');
     const occupationCanvas = document.getElementById('occupation-chart');
-    if (!institutionsCanvas || !occupationCanvas) {
-        console.error("Chart canvas element not found.");
+    const registrationsByWeekCanvas = document.getElementById('registrations-by-week-chart');
+    if (!institutionsCanvas || !occupationCanvas || !registrationsByWeekCanvas) {
+        console.error("A chart canvas element was not found.");
         return;
     }
 
@@ -364,6 +366,59 @@ function createCharts(attendees) {
         options: {
             responsive: true,
             plugins: { title: { display: true, text: occupationTitle } }
+        }
+    });
+
+    // Chart 3: Registrations by Week
+    const registrationsByWeekCtx = registrationsByWeekCanvas.getContext('2d');
+    const registrationsByWeekTitle = registrationsByWeekCanvas.getAttribute(`data-lang-${lang}-title`);
+    const registrationsByWeekLabel = registrationsByWeekCanvas.getAttribute(`data-lang-${lang}-label`);
+
+    const getWeek = (date) => {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const dayNum = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        return Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+    };
+
+    const weeklyCounts = attendees.reduce((acc, attendee) => {
+        if (!attendee.timestamp) return acc;
+        const [datePart] = attendee.timestamp.split(' ');
+        const [day, month, year] = datePart.split('/');
+        if (!year || !month || !day) return acc;
+        const date = new Date(`${year}-${month}-${day}`);
+        const week = `Week ${getWeek(date)}, ${year}`;
+        acc[week] = (acc[week] || 0) + 1;
+        return acc;
+    }, {});
+
+    const sortedWeeks = Object.keys(weeklyCounts).sort((a, b) => {
+        const [, weekA, yearA] = a.match(/Week (\d+), (\d+)/);
+        const [, weekB, yearB] = b.match(/Week (\d+), (\d+)/);
+        return new Date(yearA, 0, 1 + (weekA - 1) * 7) - new Date(yearB, 0, 1 + (weekB - 1) * 7);
+    });
+
+    window.registrationsByWeekChart = new Chart(registrationsByWeekCtx, {
+        type: 'line',
+        data: {
+            labels: sortedWeeks,
+            datasets: [{
+                label: registrationsByWeekLabel,
+                data: sortedWeeks.map(week => weeklyCounts[week]),
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: registrationsByWeekTitle
+                }
+            }
         }
     });
 }

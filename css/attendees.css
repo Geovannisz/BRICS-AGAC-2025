@@ -49,6 +49,13 @@
     margin-bottom: 2rem;
 }
 
+#institutions-chart {
+    min-height: 500px;
+}
+
+#registrations-by-week-chart {
+    margin-top: 2rem;
+}
 
 #search-input {
     max-width: 400px;
