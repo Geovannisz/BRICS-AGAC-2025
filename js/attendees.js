@@ -44,6 +44,24 @@ function parseCSV(text) {
 }
 
 
+// Helper function to convert all-caps strings to Title Case, preserving acronyms.
+function toTitleCase(str) {
+    if (!str) return '';
+    // Check if the string is all uppercase and not a likely acronym (e.g., length > 5 or contains spaces)
+    if (str === str.toUpperCase() && (str.length > 5 || str.includes(' '))) {
+        return str.toLowerCase().split(' ').map(word => {
+            // A small list of words to keep in lowercase
+            const exceptions = ['da', 'de', 'do', 'dos', 'e'];
+            if (exceptions.includes(word)) {
+                return word;
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        }).join(' ');
+    }
+    // Return the original string if it's not all-caps or looks like an acronym
+    return str;
+}
+
 function normalizeData(attendee) {
     const institutionMap = {
         'UFPB': 'Universidade Federal da Paraíba (UFPB)',
@@ -76,17 +94,23 @@ function normalizeData(attendee) {
         'Entusiasta da astronomia': 'Amateur Astronomer',
         'Master': "Master's Student",
         'PhD': 'PhD Student',
+        'Graduated': 'Graduate',
     };
 
-    const normalizedInstitution = Object.keys(institutionMap).find(key =>
+    // First, map known variations to a standard name.
+    const mappedInstitution = Object.keys(institutionMap).find(key =>
         attendee.institution.trim().toLowerCase().includes(key.toLowerCase())
     );
-    const normalizedOccupation = Object.keys(occupationMap).find(key =>
+    attendee.institution = mappedInstitution ? institutionMap[mappedInstitution] : attendee.institution.trim();
+
+    const mappedOccupation = Object.keys(occupationMap).find(key =>
         attendee.occupation.trim().toLowerCase() === key.toLowerCase()
     );
+    attendee.occupation = mappedOccupation ? occupationMap[mappedOccupation] : attendee.occupation.trim();
 
-    attendee.institution = normalizedInstitution ? institutionMap[normalizedInstitution] : attendee.institution;
-    attendee.occupation = normalizedOccupation ? occupationMap[normalizedOccupation] : attendee.occupation;
+    // Then, apply capitalization formatting.
+    attendee.name = toTitleCase(attendee.name.trim());
+    attendee.institution = toTitleCase(attendee.institution);
 
     return attendee;
 }
