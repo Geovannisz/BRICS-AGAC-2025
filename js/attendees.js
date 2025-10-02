@@ -47,18 +47,28 @@ function parseCSV(text) {
 // Helper function to convert all-caps strings to Title Case, preserving acronyms.
 function toTitleCase(str) {
     if (!str) return '';
-    // Check if the string is all uppercase and not a likely acronym (e.g., length > 5 or contains spaces)
+
+    // List of known acronyms to preserve in uppercase.
+    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE'];
+
+    // Check if the string is likely to need title casing (e.g., all caps and not a simple acronym).
     if (str === str.toUpperCase() && (str.length > 5 || str.includes(' '))) {
         return str.toLowerCase().split(' ').map(word => {
-            // A small list of words to keep in lowercase
-            const exceptions = ['da', 'de', 'do', 'dos', 'e'];
+            const upperWord = word.toUpperCase();
+            // If the word is a known acronym, return it in uppercase.
+            if (acronyms.includes(upperWord)) {
+                return upperWord;
+            }
+
+            // A small list of words to keep in lowercase.
+            const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a', 'do', 'dos'];
             if (exceptions.includes(word)) {
                 return word;
             }
             return word.charAt(0).toUpperCase() + word.slice(1);
         }).join(' ');
     }
-    // Return the original string if it's not all-caps or looks like an acronym
+    // Return the original string if it's not all-caps or doesn't need processing.
     return str;
 }
 
@@ -241,6 +251,18 @@ function createCharts(attendees) {
 
     const lang = localStorage.getItem('brics-agac-lang') || 'en';
 
+    // Translation map for occupations
+    const occupationTranslations = {
+        'Student': { en: 'Student', pt: 'Estudante' },
+        'Professor': { en: 'Professor', pt: 'Professor(a)' },
+        'Postdoc': { en: 'Postdoc', pt: 'Pós-Doutorando(a)' },
+        'Researcher': { en: 'Researcher', pt: 'Pesquisador(a)' },
+        "Master's Student": { en: "Master's Student", pt: "Mestrando(a)" },
+        'PhD Student': { en: 'PhD Student', pt: 'Doutorando(a)' },
+        'Amateur Astronomer': { en: 'Amateur Astronomer', pt: 'Astrônomo(a) Amador(a)' },
+        'Graduate': { en: 'Graduate', pt: 'Graduado(a)' }
+    };
+
     if (window.institutionsChart) window.institutionsChart.destroy();
     if (window.occupationChart) window.occupationChart.destroy();
 
@@ -264,8 +286,7 @@ function createCharts(attendees) {
 
     const sortedInstitutions = Object.entries(institutionCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .reverse();
+        .slice(0, 15);
 
     window.institutionsChart = new Chart(institutionsCtx, {
         type: 'bar',
@@ -294,10 +315,14 @@ function createCharts(attendees) {
         return acc;
     }, {});
 
+    const translatedLabels = Object.keys(occupationCounts).map(label => {
+        return occupationTranslations[label] ? occupationTranslations[label][lang] || label : label;
+    });
+
     window.occupationChart = new Chart(occupationCtx, {
         type: 'pie',
         data: {
-            labels: Object.keys(occupationCounts),
+            labels: translatedLabels,
             datasets: [{
                 data: Object.values(occupationCounts),
                 backgroundColor: [
