@@ -314,7 +314,16 @@ function createCharts(attendees) {
             indexAxis: 'y',
             responsive: true,
             plugins: { legend: { display: false }, title: { display: true, text: institutionsTitle } },
-            scales: { x: { beginAtZero: true } }
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    ticks: {
+                        autoSkip: false
+                    }
+                }
+            }
         }
     });
 
