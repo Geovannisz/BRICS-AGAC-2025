@@ -267,8 +267,7 @@ function createCharts(attendees) {
         'Researcher': { en: 'Researcher', pt: 'Pesquisador(a)' },
         "Master's Student": { en: "Master's Student", pt: "Mestrando(a)" },
         'PhD Student': { en: 'PhD Student', pt: 'Doutorando(a)' },
-        'Amateur Astronomer': { en: 'Amateur Astronomer', pt: 'Astrônomo(a) Amador(a)' },
-        'Graduate': { en: 'Graduate', pt: 'Graduado(a)' }
+        'Amateur Astronomer': { en: 'Amateur Astronomer', pt: 'Astrônomo(a) Amador(a)' }
     };
 
     if (window.institutionsChart) window.institutionsChart.destroy();
