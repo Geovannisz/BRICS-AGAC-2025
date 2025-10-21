@@ -49,7 +49,7 @@ function toTitleCase(str) {
     if (!str) return '';
 
     // List of known acronyms to preserve in uppercase.
-    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE', 'UNOPAR'];
+    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE', 'UNOPAR', 'IFPB', 'UFRN', 'ON', 'INPE', 'UFMA', 'UFRPE'];
     // A small list of words to keep in lowercase.
     const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a'];
 
@@ -100,6 +100,14 @@ function normalizeData(attendee) {
         'Associação Paraibana de Astronomia': 'Associação Paraibana de Astronomia (APA)',
         'ASSOCIAÇÃO PARAIBANA DE ASTRONOMIA (APA)': 'Associação Paraibana de Astronomia (APA)',
         'Associação Paraibana de Astronomia - APA': 'Associação Paraibana de Astronomia (APA)',
+        'Instituto Federal da Paraíba': 'Instituto Federal da Paraíba (IFPB)',
+        'IFPB': 'Instituto Federal da Paraíba (IFPB)',
+        'UFRN': 'Universidade Federal do Rio Grande do Norte (UFRN)',
+        'Observatório Nacional': 'Observatório Nacional (ON)',
+        'ON': 'Observatório Nacional (ON)',
+        'INPE': 'Instituto Nacional de Pesquisas Espaciais (INPE)',
+        'Instituto Nacional de Pesquisas Espaciais': 'Instituto Nacional de Pesquisas Espaciais (INPE)',
+        'UFMA': 'Universidade Federal do Maranhão (UFMA)',
     };
 
     const occupationMap = {
@@ -116,6 +124,8 @@ function normalizeData(attendee) {
         'Master': "Master's Student",
         'PhD': 'PhD Student',
         'Graduated': 'Student',
+        'Assistant Professor (Tentative)': 'Professor',
+        'Assessor Especial para Inovação e Empreendedorismo': 'Researcher',
     };
 
     // First, map known variations to a standard name.
