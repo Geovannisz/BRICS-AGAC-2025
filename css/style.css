@@ -761,3 +761,34 @@ body.page-loaded .page-content-wrapper {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- Programme Page Specific Styles --- */
+#programmeTabs .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--primary-color);
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+#programmeTabs .nav-link.active {
+    color: var(--secondary-color);
+    border-bottom-color: var(--secondary-color);
+    background-color: var(--neutral-light-color);
+}
+
+#programmeTabsContent .table {
+    margin-top: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+#programmeTabsContent .table th {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    font-size: 1.1rem;
+}
+
+#programmeTabsContent .table-secondary td {
+    font-style: italic;
+    color: var(--secondary-color);
+}
