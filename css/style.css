@@ -761,3 +761,88 @@ body.page-loaded .page-content-wrapper {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- Programme Page Specific Styles --- */
+
+/* Tab Navigation */
+#programmeTabs .nav-tabs {
+    border-bottom: 2px solid var(--neutral-light-color); /* Lighter border for the tab container */
+}
+
+#programmeTabs .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--primary-color);
+    border: 0; /* Remove default borders */
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    padding: 0.75rem 1.25rem;
+    border-top-left-radius: 0.5rem; /* Rounded corners */
+    border-top-right-radius: 0.5rem;
+}
+
+#programmeTabs .nav-link:hover {
+    color: var(--secondary-color);
+    background-color: var(--neutral-light-color); /* Add a subtle background on hover */
+}
+
+#programmeTabs .nav-link.active {
+    color: var(--primary-color); /* Use primary color for active text */
+    background-color: var(--background-color); /* Make it look connected to the content */
+    border-bottom: 3px solid var(--accent-color); /* Use accent color for active indicator */
+}
+
+/* Tab Content & Table */
+#programmeTabsContent .tab-pane {
+    padding-top: 1.5rem;
+}
+
+#programmeTabsContent .table {
+    margin-top: 0; /* Removed margin-top as padding is on tab-pane */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-radius: 0.5rem; /* Rounded corners for the table */
+    overflow: hidden; /* Important for border-radius to work on child elements */
+    border: 1px solid var(--neutral-light-color);
+    border-collapse: separate; /* Needed for border radius to work well */
+    border-spacing: 0;
+}
+
+#programmeTabsContent .table th {
+    background-color: var(--primary-color);
+    color: var(--light-text-color);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--accent-color); /* Accent border on header */
+    padding: 1rem;
+}
+
+#programmeTabsContent .table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+/* Specific column styling for Time */
+#programmeTabsContent .table th:first-child,
+#programmeTabsContent .table td:first-child {
+    width: 15%; /* Make the first column (Time) narrower */
+    white-space: nowrap; /* Prevent time from wrapping */
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+/* Row Hover Effect */
+#programmeTabsContent .table tbody tr:hover {
+    background-color: var(--soft-accent-color); /* Soft gold on hover */
+    color: var(--primary-color);
+}
+
+/* Break Row Styling */
+#programmeTabsContent .table .table-secondary td {
+    font-style: italic;
+    font-weight: 600;
+    background-color: var(--neutral-light-color); /* Light grey for breaks */
+    color: var(--primary-color);
+}
+
+#programmeTabsContent .table tbody tr.table-secondary:hover {
+    background-color: #d3d9df; /* Slightly darker grey on hover for breaks */
+}
