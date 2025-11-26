@@ -761,3 +761,39 @@ body.page-loaded .page-content-wrapper {
     scroll-behavior: auto !important;
   }
 }
+
+/* Programme Page Specific Styles */
+#programmeTabs .nav-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-color: var(--neutral-light-color) var(--neutral-light-color) var(--primary-color);
+    border-bottom-width: 3px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+#programmeTabs .nav-link.active {
+    color: var(--light-text-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color) var(--primary-color) var(--accent-color);
+}
+
+#programmeTabs .nav-link:hover:not(.active) {
+    background-color: var(--neutral-light-color);
+    border-color: var(--neutral-light-color) var(--neutral-light-color) var(--secondary-color);
+}
+
+#programmeTabsContent .table {
+    margin-top: 2rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+#programmeTabsContent .table th {
+    background-color: var(--secondary-color);
+    color: var(--light-text-color);
+    font-family: 'Montserrat', sans-serif;
+}
+
+#programmeTabsContent .table-hover tbody tr:hover {
+    background-color: var(--soft-accent-color);
+    cursor: pointer;
+}
