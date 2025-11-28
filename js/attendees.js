@@ -109,6 +109,24 @@ function normalizeData(attendee) {
         'Instituto Nacional de Pesquisas Espaciais': 'Instituto Nacional de Pesquisas Espaciais (INPE)',
         'UFMA': 'Universidade Federal do Maranhão (UFMA)',
         'UFABC': 'Universidade Federal do ABC (UFABC)',
+        'ifsertão': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
+        'if sertão': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
+        'instituto federal de educação, ciência e tecnologia do sertão de pernambuco': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
+        'instituto federal de ciência e tecnologia campus salgueiro': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
+        'colégio da polícia militar': 'Colégio da Polícia Militar',
+        'cpm': 'Colégio da Polícia Militar',
+        'ecieem': 'ECIEEM',
+        'secretaria de estado': 'Secretaria de Estado',
+        'governo do estado': 'Governo do Estado da Paraíba',
+        'china university of geoscience': 'China University of Geosciences',
+        'shanghai astronomical observatory': 'Shanghai Astronomical Observatory (SHAO)',
+        'huazhong university of science and technology': 'Huazhong University of Science and Technology (HUST)',
+        'lanzhou university': 'Lanzhou University',
+        'ningbo university': 'Ningbo University',
+        'university of science and technology of china': 'University of Science and Technology of China (USTC)',
+        '5GRE': 'Secretaria de Estado da Educação da Paraíba',
+        'UNINTER': 'UNINTER',
+        'UNOPAR': 'UNOPAR',
     };
 
     const occupationMap = {
@@ -116,17 +134,25 @@ function normalizeData(attendee) {
         'Estudante': 'Student',
         'Estudent': 'Student',
         'High school student': 'Student',
+        'high schooler': 'Student',
         'Undergraduate': 'Student',
         'Posdoc': 'Postdoc',
         'junior researcher': 'Researcher',
+        'Researcher': 'Researcher',
         'Astrônoma amadora/ Cientista cidadã': 'Amateur Astronomer',
         'Astrônomo amador mirim': 'Amateur Astronomer',
         'Entusiasta da astronomia': 'Amateur Astronomer',
         'Master': "Master's Student",
+        "Master's degree in progress": "Master's Student",
         'PhD': 'PhD Student',
         'Graduated': 'Student',
         'Assistant Professor (Tentative)': 'Professor',
         'Assessor Especial para Inovação e Empreendedorismo': 'Researcher',
+        'Egressa': 'Student',
+        'Técnico de Laboratório de Física': 'Staff',
+        'Employee': 'Staff',
+        'Dependent of Parthraj Bambhaniya': 'Other',
+        'Estudante de graduação': 'Student',
     };
 
     // First, map known variations to a standard name.
@@ -281,7 +307,8 @@ function createCharts(attendees) {
         'Researcher': { en: 'Researcher', pt: 'Pesquisador(a)' },
         "Master's Student": { en: "Master's Student", pt: "Mestrando(a)" },
         'PhD Student': { en: 'PhD Student', pt: 'Doutorando(a)' },
-        'Amateur Astronomer': { en: 'Amateur Astronomer', pt: 'Astrônomo(a) Amador(a)' }
+        'Amateur Astronomer': { en: 'Amateur Astronomer', pt: 'Astrônomo(a) Amador(a)' },
+        'Other': { en: 'Other', pt: 'Outro' }
     };
 
     if (window.institutionsChart) window.institutionsChart.destroy();
@@ -349,7 +376,23 @@ function createCharts(attendees) {
         return acc;
     }, {});
 
-    const translatedLabels = Object.keys(occupationCounts).map(label => {
+    // Group low-frequency occupations into "Other"
+    const finalCounts = {};
+    let otherCount = 0;
+
+    Object.entries(occupationCounts).forEach(([occ, count]) => {
+        if (count < 3) {
+            otherCount += count;
+        } else {
+            finalCounts[occ] = count;
+        }
+    });
+
+    if (otherCount > 0) {
+        finalCounts['Other'] = otherCount;
+    }
+
+    const translatedLabels = Object.keys(finalCounts).map(label => {
         return occupationTranslations[label] ? occupationTranslations[label][lang] || label : label;
     });
 
@@ -358,7 +401,7 @@ function createCharts(attendees) {
         data: {
             labels: translatedLabels,
             datasets: [{
-                data: Object.values(occupationCounts),
+                data: Object.values(finalCounts),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)',
                     'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)',
