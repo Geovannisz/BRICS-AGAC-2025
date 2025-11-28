@@ -49,7 +49,7 @@ function toTitleCase(str) {
     if (!str) return '';
 
     // List of known acronyms to preserve in uppercase.
-    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE', 'UNOPAR', 'IFPB', 'UFRN', 'ON', 'INPE', 'UFMA', 'UFRPE', 'UFABC'];
+    const acronyms = ['ECIEEM', 'UFPB', 'UFCG', 'UFJF', 'USP', 'UEFS', 'UEPB', 'IF', 'APA', 'CPM', 'GRE', 'UNOPAR', 'IFPB', 'UFRN', 'ON', 'INPE', 'UFMA', 'UFRPE', 'UFABC', 'UFAL', 'UFCA', 'UFOB', 'UFMT', 'IFF', 'UFOPA', 'UNICID', 'ITP-CAS', 'USTC'];
     // A small list of words to keep in lowercase.
     const exceptions = ['da', 'de', 'do', 'dos', 'e', 'o', 'a'];
 
@@ -84,22 +84,26 @@ function normalizeData(attendee) {
     const institutionMap = {
         'UFPB': 'Universidade Federal da Paraíba (UFPB)',
         'Universidade Federal da Paraíba': 'Universidade Federal da Paraíba (UFPB)',
-        'universidade federal da paraíba': 'Universidade Federal da Paraíba (UFPB)',
-        'Universidade Federal da Paraíba-UFPB': 'Universidade Federal da Paraíba (UFPB)',
+        'University of Paraíba': 'Universidade Federal da Paraíba (UFPB)',
         'UFCG': 'Universidade Federal de Campina Grande (UFCG)',
         'Unversidade Federal de Campina Grande': 'Universidade Federal de Campina Grande (UFCG)',
+        'Universidade Federal de Campina Grande': 'Universidade Federal de Campina Grande (UFCG)',
         'Universidade Federal de Juiz de Fora': 'Universidade Federal de Juiz de Fora (UFJF)',
         'IF Sudeste MG': 'Instituto Federal do Sudeste de Minas Gerais',
-        'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUDESTE DE MINAS GERAIS - Campus Juiz de Fora': 'Instituto Federal do Sudeste de Minas Gerais',
+        'INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO SUDESTE DE MINAS GERAIS': 'Instituto Federal do Sudeste de Minas Gerais',
         'USP': 'Universidade de São Paulo (USP)',
         'IAG/USP': 'Universidade de São Paulo (USP)',
+        'Universidade de São Paulo': 'Universidade de São Paulo (USP)',
         'Instituto de Física da USP': 'Universidade de São Paulo (USP)',
+        'University of São Paulo': 'Universidade de São Paulo (USP)',
+        'São Paulo University': 'Universidade de São Paulo (USP)',
         'UEFS': 'Universidade Estadual de Feira de Santana (UEFS)',
         'UEPB': 'Universidade Estadual da Paraíba (UEPB)',
+        'Universidade Estadual da Paraíba': 'Universidade Estadual da Paraíba (UEPB)',
         'Rural Federal University of Pernambuco': 'Universidade Federal Rural de Pernambuco (UFRPE)',
+        'Universidade Federal Rural de Pernambuco': 'Universidade Federal Rural de Pernambuco (UFRPE)',
         'Associação Paraibana de Astronomia': 'Associação Paraibana de Astronomia (APA)',
-        'ASSOCIAÇÃO PARAIBANA DE ASTRONOMIA (APA)': 'Associação Paraibana de Astronomia (APA)',
-        'Associação Paraibana de Astronomia - APA': 'Associação Paraibana de Astronomia (APA)',
+        'ASSOCIAÇÃO PARAIBANA DE ASTRONOMIA': 'Associação Paraibana de Astronomia (APA)',
         'Instituto Federal da Paraíba': 'Instituto Federal da Paraíba (IFPB)',
         'IFPB': 'Instituto Federal da Paraíba (IFPB)',
         'UFRN': 'Universidade Federal do Rio Grande do Norte (UFRN)',
@@ -108,11 +112,13 @@ function normalizeData(attendee) {
         'INPE': 'Instituto Nacional de Pesquisas Espaciais (INPE)',
         'Instituto Nacional de Pesquisas Espaciais': 'Instituto Nacional de Pesquisas Espaciais (INPE)',
         'UFMA': 'Universidade Federal do Maranhão (UFMA)',
+        'Universidade Federal do Maranhão': 'Universidade Federal do Maranhão (UFMA)',
         'UFABC': 'Universidade Federal do ABC (UFABC)',
+        'Universidade Federal do ABC': 'Universidade Federal do ABC (UFABC)',
         'ifsertão': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
         'if sertão': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
         'instituto federal de educação, ciência e tecnologia do sertão de pernambuco': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
-        'instituto federal de ciência e tecnologia campus salgueiro': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
+        'Sertão de Pernambuco': 'Instituto Federal do Sertão Pernambucano (IFSertãoPE)',
         'colégio da polícia militar': 'Colégio da Polícia Militar',
         'cpm': 'Colégio da Polícia Militar',
         'ecieem': 'ECIEEM',
@@ -127,6 +133,14 @@ function normalizeData(attendee) {
         '5GRE': 'Secretaria de Estado da Educação da Paraíba',
         'UNINTER': 'UNINTER',
         'UNOPAR': 'UNOPAR',
+        'Universidade Federal de Alagoas': 'Universidade Federal de Alagoas (UFAL)',
+        'Universidade Federal do Cariri': 'Universidade Federal do Cariri (UFCA)',
+        'Federal University of Western of Bahia': 'Universidade Federal do Oeste da Bahia (UFOB)',
+        'Universidade Federal de Mato Grosso': 'Universidade Federal de Mato Grosso (UFMT)',
+        'Tecnologialogia Fluminense': 'Instituto Federal Fluminense (IFF)',
+        'Universidade Federal do Oeste do Pará': 'Universidade Federal do Oeste do Pará (UFOPA)',
+        'Universidade Cidade de São Paulo': 'Universidade Cidade de São Paulo (UNICID)',
+        'Institute of Theoretical Physics': 'Institute of Theoretical Physics (ITP-CAS)',
     };
 
     const occupationMap = {
