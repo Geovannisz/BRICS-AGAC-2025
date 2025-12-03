@@ -571,6 +571,17 @@ a:hover {
     font-size: 0.85em; /* Slightly smaller icon if needed */
 }
 
+.committee-institution {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.committee-area {
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+
 /* Chairperson Badge Styling */
 .card-committee-enhanced.is-chair::before {
     content: "Chair";
