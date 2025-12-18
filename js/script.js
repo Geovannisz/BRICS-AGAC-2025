@@ -146,6 +146,15 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollObserver.observe(element);
     });
 
+    // --- Auto-scroll to Thank You Section (Homepage) ---
+    const thankYouSection = document.querySelector('.thank-you-section');
+    if (thankYouSection) {
+        // Add a small delay to ensure initial layout and animations don't interfere with scroll position
+        setTimeout(() => {
+            thankYouSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 800);
+    }
+
 
     // --- Button Mouse-aware Spotlight Effect ---
     const buttons = document.querySelectorAll('.btn');
